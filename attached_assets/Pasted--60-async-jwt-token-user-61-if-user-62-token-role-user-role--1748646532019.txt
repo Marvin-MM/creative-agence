@@ -1,0 +1,839 @@
+ 60 │     async jwt({ token, user }) {
+ 61 │       if (user) {
+ 62 │         token.role = user.role
+ 63 │       }
+ 64 │       return token
+ 65 │     },
+ 66 │     async session({ session, token }) {
+ 67 │       if (token) {
+ 68 │         session.user.id = token.sub!
+ 69 │         session.user.role = token.role as string
+ 70 │       }
+ 71 │       return session
+ 72 │     }
+ 73 │   },
+ 74 │   secret: process.env.NEXTAUTH_SECRET,
+ 75 │ }
+ 76 │ import { NextAuthOptions } from "next-auth"
+ 77 │ import { PrismaAdapter } from "@auth/prisma-adapter"
+ 78 │ import CredentialsProvider from "next-auth/providers/credentials"
+ 79 │ import bcrypt from "bcryptjs"
+    ·        ───┬──
+    ·           ╰── `bcrypt` redefined here
+ 80 │ import { db } from "./db"
+ 81 │ 
+ 82 │ export const authOptions: NextAuthOptions = {
+    ╰────
+
+  × the name `authOptions` is defined multiple times
+    ╭─[/home/barrest/Desktop/creative-agency/src/lib/auth.ts:5:1]
+  5 │ import bcrypt from 'bcryptjs'
+  6 │ import { prisma } from '@/lib/db'
+  7 │ 
+  8 │ export const authOptions: NextAuthOptions = {
+    ·              ─────┬─────
+    ·                   ╰── previous definition of `authOptions` here
+  9 │   adapter: PrismaAdapter(prisma),
+ 10 │   providers: [
+ 11 │     CredentialsProvider({
+ 12 │       name: 'credentials',
+ 13 │       credentials: {
+ 14 │         email: { label: 'Email', type: 'email' },
+ 15 │         password: { label: 'Password', type: 'password' }
+ 16 │       },
+ 17 │       async authorize(credentials) {
+ 18 │         if (!credentials?.email || !credentials?.password) {
+ 19 │           throw new Error('Missing credentials')
+ 20 │         }
+ 21 │ 
+ 22 │         const user = await prisma.user.findUnique({
+ 23 │           where: { email: credentials.email }
+ 24 │         })
+ 25 │ 
+ 26 │         if (!user || !user.password) {
+ 27 │           throw new Error('Invalid credentials')
+ 28 │         }
+ 29 │ 
+ 30 │         const isPasswordValid = await bcrypt.compare(
+ 31 │           credentials.password,
+ 32 │           user.password
+ 33 │         )
+ 34 │ 
+ 35 │         if (!isPasswordValid) {
+ 36 │           throw new Error('Invalid credentials')
+ 37 │         }
+ 38 │ 
+ 39 │         return {
+ 40 │           id: user.id,
+ 41 │           email: user.email,
+ 42 │           name: user.name,
+ 43 │           role: user.role,
+ 44 │         }
+ 45 │       }
+ 46 │     })
+ 47 │   ],
+ 48 │   session: {
+ 49 │     strategy: 'jwt',
+ 50 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 51 │   },
+ 52 │   jwt: {
+ 53 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 54 │   },
+ 55 │   pages: {
+ 56 │     signIn: '/admin/login',
+ 57 │     error: '/admin/error',
+ 58 │   },
+ 59 │   callbacks: {
+ 60 │     async jwt({ token, user }) {
+ 61 │       if (user) {
+ 62 │         token.role = user.role
+ 63 │       }
+ 64 │       return token
+ 65 │     },
+ 66 │     async session({ session, token }) {
+ 67 │       if (token) {
+ 68 │         session.user.id = token.sub!
+ 69 │         session.user.role = token.role as string
+ 70 │       }
+ 71 │       return session
+ 72 │     }
+ 73 │   },
+ 74 │   secret: process.env.NEXTAUTH_SECRET,
+ 75 │ }
+ 76 │ import { NextAuthOptions } from "next-auth"
+ 77 │ import { PrismaAdapter } from "@auth/prisma-adapter"
+ 78 │ import CredentialsProvider from "next-auth/providers/credentials"
+ 79 │ import bcrypt from "bcryptjs"
+ 80 │ import { db } from "./db"
+ 81 │ 
+ 82 │ export const authOptions: NextAuthOptions = {
+    ·              ─────┬─────
+    ·                   ╰── `authOptions` redefined here
+ 83 │   adapter: PrismaAdapter(db),
+ 84 │   providers: [
+ 85 │     CredentialsProvider({
+    ╰────
+
+Import trace for requested module:
+./src/lib/auth.ts
+./src/app/(auth)/admin/page.tsx
+ ⨯ ./src/lib/auth.ts
+Error: 
+  × the name `PrismaAdapter` is defined multiple times
+    ╭─[/home/barrest/Desktop/creative-agency/src/lib/auth.ts:1:1]
+  1 │ // src/lib/auth.ts
+  2 │ import { NextAuthOptions } from 'next-auth'
+  3 │ import CredentialsProvider from 'next-auth/providers/credentials'
+  4 │ import { PrismaAdapter } from '@auth/prisma-adapter'
+    ·          ──────┬──────
+    ·                ╰── previous definition of `PrismaAdapter` here
+  5 │ import bcrypt from 'bcryptjs'
+  6 │ import { prisma } from '@/lib/db'
+  7 │ 
+  8 │ export const authOptions: NextAuthOptions = {
+  9 │   adapter: PrismaAdapter(prisma),
+ 10 │   providers: [
+ 11 │     CredentialsProvider({
+ 12 │       name: 'credentials',
+ 13 │       credentials: {
+ 14 │         email: { label: 'Email', type: 'email' },
+ 15 │         password: { label: 'Password', type: 'password' }
+ 16 │       },
+ 17 │       async authorize(credentials) {
+ 18 │         if (!credentials?.email || !credentials?.password) {
+ 19 │           throw new Error('Missing credentials')
+ 20 │         }
+ 21 │ 
+ 22 │         const user = await prisma.user.findUnique({
+ 23 │           where: { email: credentials.email }
+ 24 │         })
+ 25 │ 
+ 26 │         if (!user || !user.password) {
+ 27 │           throw new Error('Invalid credentials')
+ 28 │         }
+ 29 │ 
+ 30 │         const isPasswordValid = await bcrypt.compare(
+ 31 │           credentials.password,
+ 32 │           user.password
+ 33 │         )
+ 34 │ 
+ 35 │         if (!isPasswordValid) {
+ 36 │           throw new Error('Invalid credentials')
+ 37 │         }
+ 38 │ 
+ 39 │         return {
+ 40 │           id: user.id,
+ 41 │           email: user.email,
+ 42 │           name: user.name,
+ 43 │           role: user.role,
+ 44 │         }
+ 45 │       }
+ 46 │     })
+ 47 │   ],
+ 48 │   session: {
+ 49 │     strategy: 'jwt',
+ 50 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 51 │   },
+ 52 │   jwt: {
+ 53 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 54 │   },
+ 55 │   pages: {
+ 56 │     signIn: '/admin/login',
+ 57 │     error: '/admin/error',
+ 58 │   },
+ 59 │   callbacks: {
+ 60 │     async jwt({ token, user }) {
+ 61 │       if (user) {
+ 62 │         token.role = user.role
+ 63 │       }
+ 64 │       return token
+ 65 │     },
+ 66 │     async session({ session, token }) {
+ 67 │       if (token) {
+ 68 │         session.user.id = token.sub!
+ 69 │         session.user.role = token.role as string
+ 70 │       }
+ 71 │       return session
+ 72 │     }
+ 73 │   },
+ 74 │   secret: process.env.NEXTAUTH_SECRET,
+ 75 │ }
+ 76 │ import { NextAuthOptions } from "next-auth"
+ 77 │ import { PrismaAdapter } from "@auth/prisma-adapter"
+    ·          ──────┬──────
+    ·                ╰── `PrismaAdapter` redefined here
+ 78 │ import CredentialsProvider from "next-auth/providers/credentials"
+ 79 │ import bcrypt from "bcryptjs"
+ 80 │ import { db } from "./db"
+    ╰────
+
+  × the name `CredentialsProvider` is defined multiple times
+    ╭─[/home/barrest/Desktop/creative-agency/src/lib/auth.ts:1:1]
+  1 │ // src/lib/auth.ts
+  2 │ import { NextAuthOptions } from 'next-auth'
+  3 │ import CredentialsProvider from 'next-auth/providers/credentials'
+    ·        ─────────┬─────────
+    ·                 ╰── previous definition of `CredentialsProvider` here
+  4 │ import { PrismaAdapter } from '@auth/prisma-adapter'
+  5 │ import bcrypt from 'bcryptjs'
+  6 │ import { prisma } from '@/lib/db'
+  7 │ 
+  8 │ export const authOptions: NextAuthOptions = {
+  9 │   adapter: PrismaAdapter(prisma),
+ 10 │   providers: [
+ 11 │     CredentialsProvider({
+ 12 │       name: 'credentials',
+ 13 │       credentials: {
+ 14 │         email: { label: 'Email', type: 'email' },
+ 15 │         password: { label: 'Password', type: 'password' }
+ 16 │       },
+ 17 │       async authorize(credentials) {
+ 18 │         if (!credentials?.email || !credentials?.password) {
+ 19 │           throw new Error('Missing credentials')
+ 20 │         }
+ 21 │ 
+ 22 │         const user = await prisma.user.findUnique({
+ 23 │           where: { email: credentials.email }
+ 24 │         })
+ 25 │ 
+ 26 │         if (!user || !user.password) {
+ 27 │           throw new Error('Invalid credentials')
+ 28 │         }
+ 29 │ 
+ 30 │         const isPasswordValid = await bcrypt.compare(
+ 31 │           credentials.password,
+ 32 │           user.password
+ 33 │         )
+ 34 │ 
+ 35 │         if (!isPasswordValid) {
+ 36 │           throw new Error('Invalid credentials')
+ 37 │         }
+ 38 │ 
+ 39 │         return {
+ 40 │           id: user.id,
+ 41 │           email: user.email,
+ 42 │           name: user.name,
+ 43 │           role: user.role,
+ 44 │         }
+ 45 │       }
+ 46 │     })
+ 47 │   ],
+ 48 │   session: {
+ 49 │     strategy: 'jwt',
+ 50 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 51 │   },
+ 52 │   jwt: {
+ 53 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 54 │   },
+ 55 │   pages: {
+ 56 │     signIn: '/admin/login',
+ 57 │     error: '/admin/error',
+ 58 │   },
+ 59 │   callbacks: {
+ 60 │     async jwt({ token, user }) {
+ 61 │       if (user) {
+ 62 │         token.role = user.role
+ 63 │       }
+ 64 │       return token
+ 65 │     },
+ 66 │     async session({ session, token }) {
+ 67 │       if (token) {
+ 68 │         session.user.id = token.sub!
+ 69 │         session.user.role = token.role as string
+ 70 │       }
+ 71 │       return session
+ 72 │     }
+ 73 │   },
+ 74 │   secret: process.env.NEXTAUTH_SECRET,
+ 75 │ }
+ 76 │ import { NextAuthOptions } from "next-auth"
+ 77 │ import { PrismaAdapter } from "@auth/prisma-adapter"
+ 78 │ import CredentialsProvider from "next-auth/providers/credentials"
+    ·        ─────────┬─────────
+    ·                 ╰── `CredentialsProvider` redefined here
+ 79 │ import bcrypt from "bcryptjs"
+ 80 │ import { db } from "./db"
+    ╰────
+
+  × the name `bcrypt` is defined multiple times
+    ╭─[/home/barrest/Desktop/creative-agency/src/lib/auth.ts:2:1]
+  2 │ import { NextAuthOptions } from 'next-auth'
+  3 │ import CredentialsProvider from 'next-auth/providers/credentials'
+  4 │ import { PrismaAdapter } from '@auth/prisma-adapter'
+  5 │ import bcrypt from 'bcryptjs'
+    ·        ───┬──
+    ·           ╰── previous definition of `bcrypt` here
+  6 │ import { prisma } from '@/lib/db'
+  7 │ 
+  8 │ export const authOptions: NextAuthOptions = {
+  9 │   adapter: PrismaAdapter(prisma),
+ 10 │   providers: [
+ 11 │     CredentialsProvider({
+ 12 │       name: 'credentials',
+ 13 │       credentials: {
+ 14 │         email: { label: 'Email', type: 'email' },
+ 15 │         password: { label: 'Password', type: 'password' }
+ 16 │       },
+ 17 │       async authorize(credentials) {
+ 18 │         if (!credentials?.email || !credentials?.password) {
+ 19 │           throw new Error('Missing credentials')
+ 20 │         }
+ 21 │ 
+ 22 │         const user = await prisma.user.findUnique({
+ 23 │           where: { email: credentials.email }
+ 24 │         })
+ 25 │ 
+ 26 │         if (!user || !user.password) {
+ 27 │           throw new Error('Invalid credentials')
+ 28 │         }
+ 29 │ 
+ 30 │         const isPasswordValid = await bcrypt.compare(
+ 31 │           credentials.password,
+ 32 │           user.password
+ 33 │         )
+ 34 │ 
+ 35 │         if (!isPasswordValid) {
+ 36 │           throw new Error('Invalid credentials')
+ 37 │         }
+ 38 │ 
+ 39 │         return {
+ 40 │           id: user.id,
+ 41 │           email: user.email,
+ 42 │           name: user.name,
+ 43 │           role: user.role,
+ 44 │         }
+ 45 │       }
+ 46 │     })
+ 47 │   ],
+ 48 │   session: {
+ 49 │     strategy: 'jwt',
+ 50 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 51 │   },
+ 52 │   jwt: {
+ 53 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 54 │   },
+ 55 │   pages: {
+ 56 │     signIn: '/admin/login',
+ 57 │     error: '/admin/error',
+ 58 │   },
+ 59 │   callbacks: {
+ 60 │     async jwt({ token, user }) {
+ 61 │       if (user) {
+ 62 │         token.role = user.role
+ 63 │       }
+ 64 │       return token
+ 65 │     },
+ 66 │     async session({ session, token }) {
+ 67 │       if (token) {
+ 68 │         session.user.id = token.sub!
+ 69 │         session.user.role = token.role as string
+ 70 │       }
+ 71 │       return session
+ 72 │     }
+ 73 │   },
+ 74 │   secret: process.env.NEXTAUTH_SECRET,
+ 75 │ }
+ 76 │ import { NextAuthOptions } from "next-auth"
+ 77 │ import { PrismaAdapter } from "@auth/prisma-adapter"
+ 78 │ import CredentialsProvider from "next-auth/providers/credentials"
+ 79 │ import bcrypt from "bcryptjs"
+    ·        ───┬──
+    ·           ╰── `bcrypt` redefined here
+ 80 │ import { db } from "./db"
+ 81 │ 
+ 82 │ export const authOptions: NextAuthOptions = {
+    ╰────
+
+  × the name `authOptions` is defined multiple times
+    ╭─[/home/barrest/Desktop/creative-agency/src/lib/auth.ts:5:1]
+  5 │ import bcrypt from 'bcryptjs'
+  6 │ import { prisma } from '@/lib/db'
+  7 │ 
+  8 │ export const authOptions: NextAuthOptions = {
+    ·              ─────┬─────
+    ·                   ╰── previous definition of `authOptions` here
+  9 │   adapter: PrismaAdapter(prisma),
+ 10 │   providers: [
+ 11 │     CredentialsProvider({
+ 12 │       name: 'credentials',
+ 13 │       credentials: {
+ 14 │         email: { label: 'Email', type: 'email' },
+ 15 │         password: { label: 'Password', type: 'password' }
+ 16 │       },
+ 17 │       async authorize(credentials) {
+ 18 │         if (!credentials?.email || !credentials?.password) {
+ 19 │           throw new Error('Missing credentials')
+ 20 │         }
+ 21 │ 
+ 22 │         const user = await prisma.user.findUnique({
+ 23 │           where: { email: credentials.email }
+ 24 │         })
+ 25 │ 
+ 26 │         if (!user || !user.password) {
+ 27 │           throw new Error('Invalid credentials')
+ 28 │         }
+ 29 │ 
+ 30 │         const isPasswordValid = await bcrypt.compare(
+ 31 │           credentials.password,
+ 32 │           user.password
+ 33 │         )
+ 34 │ 
+ 35 │         if (!isPasswordValid) {
+ 36 │           throw new Error('Invalid credentials')
+ 37 │         }
+ 38 │ 
+ 39 │         return {
+ 40 │           id: user.id,
+ 41 │           email: user.email,
+ 42 │           name: user.name,
+ 43 │           role: user.role,
+ 44 │         }
+ 45 │       }
+ 46 │     })
+ 47 │   ],
+ 48 │   session: {
+ 49 │     strategy: 'jwt',
+ 50 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 51 │   },
+ 52 │   jwt: {
+ 53 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 54 │   },
+ 55 │   pages: {
+ 56 │     signIn: '/admin/login',
+ 57 │     error: '/admin/error',
+ 58 │   },
+ 59 │   callbacks: {
+ 60 │     async jwt({ token, user }) {
+ 61 │       if (user) {
+ 62 │         token.role = user.role
+ 63 │       }
+ 64 │       return token
+ 65 │     },
+ 66 │     async session({ session, token }) {
+ 67 │       if (token) {
+ 68 │         session.user.id = token.sub!
+ 69 │         session.user.role = token.role as string
+ 70 │       }
+ 71 │       return session
+ 72 │     }
+ 73 │   },
+ 74 │   secret: process.env.NEXTAUTH_SECRET,
+ 75 │ }
+ 76 │ import { NextAuthOptions } from "next-auth"
+ 77 │ import { PrismaAdapter } from "@auth/prisma-adapter"
+ 78 │ import CredentialsProvider from "next-auth/providers/credentials"
+ 79 │ import bcrypt from "bcryptjs"
+ 80 │ import { db } from "./db"
+ 81 │ 
+ 82 │ export const authOptions: NextAuthOptions = {
+    ·              ─────┬─────
+    ·                   ╰── `authOptions` redefined here
+ 83 │   adapter: PrismaAdapter(db),
+ 84 │   providers: [
+ 85 │     CredentialsProvider({
+    ╰────
+
+Import trace for requested module:
+./src/lib/auth.ts
+./src/app/(auth)/admin/page.tsx
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack failed from /home/barrest/Desktop/creative-agency/.next/cache/webpack/client-development-fallback.pack.gz: Error: invalid stored block lengths
+ ⨯ ./src/lib/auth.ts
+Error: 
+  × the name `PrismaAdapter` is defined multiple times
+    ╭─[/home/barrest/Desktop/creative-agency/src/lib/auth.ts:1:1]
+  1 │ // src/lib/auth.ts
+  2 │ import { NextAuthOptions } from 'next-auth'
+  3 │ import CredentialsProvider from 'next-auth/providers/credentials'
+  4 │ import { PrismaAdapter } from '@auth/prisma-adapter'
+    ·          ──────┬──────
+    ·                ╰── previous definition of `PrismaAdapter` here
+  5 │ import bcrypt from 'bcryptjs'
+  6 │ import { prisma } from '@/lib/db'
+  7 │ 
+  8 │ export const authOptions: NextAuthOptions = {
+  9 │   adapter: PrismaAdapter(prisma),
+ 10 │   providers: [
+ 11 │     CredentialsProvider({
+ 12 │       name: 'credentials',
+ 13 │       credentials: {
+ 14 │         email: { label: 'Email', type: 'email' },
+ 15 │         password: { label: 'Password', type: 'password' }
+ 16 │       },
+ 17 │       async authorize(credentials) {
+ 18 │         if (!credentials?.email || !credentials?.password) {
+ 19 │           throw new Error('Missing credentials')
+ 20 │         }
+ 21 │ 
+ 22 │         const user = await prisma.user.findUnique({
+ 23 │           where: { email: credentials.email }
+ 24 │         })
+ 25 │ 
+ 26 │         if (!user || !user.password) {
+ 27 │           throw new Error('Invalid credentials')
+ 28 │         }
+ 29 │ 
+ 30 │         const isPasswordValid = await bcrypt.compare(
+ 31 │           credentials.password,
+ 32 │           user.password
+ 33 │         )
+ 34 │ 
+ 35 │         if (!isPasswordValid) {
+ 36 │           throw new Error('Invalid credentials')
+ 37 │         }
+ 38 │ 
+ 39 │         return {
+ 40 │           id: user.id,
+ 41 │           email: user.email,
+ 42 │           name: user.name,
+ 43 │           role: user.role,
+ 44 │         }
+ 45 │       }
+ 46 │     })
+ 47 │   ],
+ 48 │   session: {
+ 49 │     strategy: 'jwt',
+ 50 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 51 │   },
+ 52 │   jwt: {
+ 53 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 54 │   },
+ 55 │   pages: {
+ 56 │     signIn: '/admin/login',
+ 57 │     error: '/admin/error',
+ 58 │   },
+ 59 │   callbacks: {
+ 60 │     async jwt({ token, user }) {
+ 61 │       if (user) {
+ 62 │         token.role = user.role
+ 63 │       }
+ 64 │       return token
+ 65 │     },
+ 66 │     async session({ session, token }) {
+ 67 │       if (token) {
+ 68 │         session.user.id = token.sub!
+ 69 │         session.user.role = token.role as string
+ 70 │       }
+ 71 │       return session
+ 72 │     }
+ 73 │   },
+ 74 │   secret: process.env.NEXTAUTH_SECRET,
+ 75 │ }
+ 76 │ import { NextAuthOptions } from "next-auth"
+ 77 │ import { PrismaAdapter } from "@auth/prisma-adapter"
+    ·          ──────┬──────
+    ·                ╰── `PrismaAdapter` redefined here
+ 78 │ import CredentialsProvider from "next-auth/providers/credentials"
+ 79 │ import bcrypt from "bcryptjs"
+ 80 │ import { db } from "./db"
+    ╰────
+
+  × the name `CredentialsProvider` is defined multiple times
+    ╭─[/home/barrest/Desktop/creative-agency/src/lib/auth.ts:1:1]
+  1 │ // src/lib/auth.ts
+  2 │ import { NextAuthOptions } from 'next-auth'
+  3 │ import CredentialsProvider from 'next-auth/providers/credentials'
+    ·        ─────────┬─────────
+    ·                 ╰── previous definition of `CredentialsProvider` here
+  4 │ import { PrismaAdapter } from '@auth/prisma-adapter'
+  5 │ import bcrypt from 'bcryptjs'
+  6 │ import { prisma } from '@/lib/db'
+  7 │ 
+  8 │ export const authOptions: NextAuthOptions = {
+  9 │   adapter: PrismaAdapter(prisma),
+ 10 │   providers: [
+ 11 │     CredentialsProvider({
+ 12 │       name: 'credentials',
+ 13 │       credentials: {
+ 14 │         email: { label: 'Email', type: 'email' },
+ 15 │         password: { label: 'Password', type: 'password' }
+ 16 │       },
+ 17 │       async authorize(credentials) {
+ 18 │         if (!credentials?.email || !credentials?.password) {
+ 19 │           throw new Error('Missing credentials')
+ 20 │         }
+ 21 │ 
+ 22 │         const user = await prisma.user.findUnique({
+ 23 │           where: { email: credentials.email }
+ 24 │         })
+ 25 │ 
+ 26 │         if (!user || !user.password) {
+ 27 │           throw new Error('Invalid credentials')
+ 28 │         }
+ 29 │ 
+ 30 │         const isPasswordValid = await bcrypt.compare(
+ 31 │           credentials.password,
+ 32 │           user.password
+ 33 │         )
+ 34 │ 
+ 35 │         if (!isPasswordValid) {
+ 36 │           throw new Error('Invalid credentials')
+ 37 │         }
+ 38 │ 
+ 39 │         return {
+ 40 │           id: user.id,
+ 41 │           email: user.email,
+ 42 │           name: user.name,
+ 43 │           role: user.role,
+ 44 │         }
+ 45 │       }
+ 46 │     })
+ 47 │   ],
+ 48 │   session: {
+ 49 │     strategy: 'jwt',
+ 50 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 51 │   },
+ 52 │   jwt: {
+ 53 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 54 │   },
+ 55 │   pages: {
+ 56 │     signIn: '/admin/login',
+ 57 │     error: '/admin/error',
+ 58 │   },
+ 59 │   callbacks: {
+ 60 │     async jwt({ token, user }) {
+ 61 │       if (user) {
+ 62 │         token.role = user.role
+ 63 │       }
+ 64 │       return token
+ 65 │     },
+ 66 │     async session({ session, token }) {
+ 67 │       if (token) {
+ 68 │         session.user.id = token.sub!
+ 69 │         session.user.role = token.role as string
+ 70 │       }
+ 71 │       return session
+ 72 │     }
+ 73 │   },
+ 74 │   secret: process.env.NEXTAUTH_SECRET,
+ 75 │ }
+ 76 │ import { NextAuthOptions } from "next-auth"
+ 77 │ import { PrismaAdapter } from "@auth/prisma-adapter"
+ 78 │ import CredentialsProvider from "next-auth/providers/credentials"
+    ·        ─────────┬─────────
+    ·                 ╰── `CredentialsProvider` redefined here
+ 79 │ import bcrypt from "bcryptjs"
+ 80 │ import { db } from "./db"
+    ╰────
+
+  × the name `bcrypt` is defined multiple times
+    ╭─[/home/barrest/Desktop/creative-agency/src/lib/auth.ts:2:1]
+  2 │ import { NextAuthOptions } from 'next-auth'
+  3 │ import CredentialsProvider from 'next-auth/providers/credentials'
+  4 │ import { PrismaAdapter } from '@auth/prisma-adapter'
+  5 │ import bcrypt from 'bcryptjs'
+    ·        ───┬──
+    ·           ╰── previous definition of `bcrypt` here
+  6 │ import { prisma } from '@/lib/db'
+  7 │ 
+  8 │ export const authOptions: NextAuthOptions = {
+  9 │   adapter: PrismaAdapter(prisma),
+ 10 │   providers: [
+ 11 │     CredentialsProvider({
+ 12 │       name: 'credentials',
+ 13 │       credentials: {
+ 14 │         email: { label: 'Email', type: 'email' },
+ 15 │         password: { label: 'Password', type: 'password' }
+ 16 │       },
+ 17 │       async authorize(credentials) {
+ 18 │         if (!credentials?.email || !credentials?.password) {
+ 19 │           throw new Error('Missing credentials')
+ 20 │         }
+ 21 │ 
+ 22 │         const user = await prisma.user.findUnique({
+ 23 │           where: { email: credentials.email }
+ 24 │         })
+ 25 │ 
+ 26 │         if (!user || !user.password) {
+ 27 │           throw new Error('Invalid credentials')
+ 28 │         }
+ 29 │ 
+ 30 │         const isPasswordValid = await bcrypt.compare(
+ 31 │           credentials.password,
+ 32 │           user.password
+ 33 │         )
+ 34 │ 
+ 35 │         if (!isPasswordValid) {
+ 36 │           throw new Error('Invalid credentials')
+ 37 │         }
+ 38 │ 
+ 39 │         return {
+ 40 │           id: user.id,
+ 41 │           email: user.email,
+ 42 │           name: user.name,
+ 43 │           role: user.role,
+ 44 │         }
+ 45 │       }
+ 46 │     })
+ 47 │   ],
+ 48 │   session: {
+ 49 │     strategy: 'jwt',
+ 50 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 51 │   },
+ 52 │   jwt: {
+ 53 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 54 │   },
+ 55 │   pages: {
+ 56 │     signIn: '/admin/login',
+ 57 │     error: '/admin/error',
+ 58 │   },
+ 59 │   callbacks: {
+ 60 │     async jwt({ token, user }) {
+ 61 │       if (user) {
+ 62 │         token.role = user.role
+ 63 │       }
+ 64 │       return token
+ 65 │     },
+ 66 │     async session({ session, token }) {
+ 67 │       if (token) {
+ 68 │         session.user.id = token.sub!
+ 69 │         session.user.role = token.role as string
+ 70 │       }
+ 71 │       return session
+ 72 │     }
+ 73 │   },
+ 74 │   secret: process.env.NEXTAUTH_SECRET,
+ 75 │ }
+ 76 │ import { NextAuthOptions } from "next-auth"
+ 77 │ import { PrismaAdapter } from "@auth/prisma-adapter"
+ 78 │ import CredentialsProvider from "next-auth/providers/credentials"
+ 79 │ import bcrypt from "bcryptjs"
+    ·        ───┬──
+    ·           ╰── `bcrypt` redefined here
+ 80 │ import { db } from "./db"
+ 81 │ 
+ 82 │ export const authOptions: NextAuthOptions = {
+    ╰────
+
+  × the name `authOptions` is defined multiple times
+    ╭─[/home/barrest/Desktop/creative-agency/src/lib/auth.ts:5:1]
+  5 │ import bcrypt from 'bcryptjs'
+  6 │ import { prisma } from '@/lib/db'
+  7 │ 
+  8 │ export const authOptions: NextAuthOptions = {
+    ·              ─────┬─────
+    ·                   ╰── previous definition of `authOptions` here
+  9 │   adapter: PrismaAdapter(prisma),
+ 10 │   providers: [
+ 11 │     CredentialsProvider({
+ 12 │       name: 'credentials',
+ 13 │       credentials: {
+ 14 │         email: { label: 'Email', type: 'email' },
+ 15 │         password: { label: 'Password', type: 'password' }
+ 16 │       },
+ 17 │       async authorize(credentials) {
+ 18 │         if (!credentials?.email || !credentials?.password) {
+ 19 │           throw new Error('Missing credentials')
+ 20 │         }
+ 21 │ 
+ 22 │         const user = await prisma.user.findUnique({
+ 23 │           where: { email: credentials.email }
+ 24 │         })
+ 25 │ 
+ 26 │         if (!user || !user.password) {
+ 27 │           throw new Error('Invalid credentials')
+ 28 │         }
+ 29 │ 
+ 30 │         const isPasswordValid = await bcrypt.compare(
+ 31 │           credentials.password,
+ 32 │           user.password
+ 33 │         )
+ 34 │ 
+ 35 │         if (!isPasswordValid) {
+ 36 │           throw new Error('Invalid credentials')
+ 37 │         }
+ 38 │ 
+ 39 │         return {
+ 40 │           id: user.id,
+ 41 │           email: user.email,
+ 42 │           name: user.name,
+ 43 │           role: user.role,
+ 44 │         }
+ 45 │       }
+ 46 │     })
+ 47 │   ],
+ 48 │   session: {
+ 49 │     strategy: 'jwt',
+ 50 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 51 │   },
+ 52 │   jwt: {
+ 53 │     maxAge: 30 * 24 * 60 * 60, // 30 days
+ 54 │   },
+ 55 │   pages: {
+ 56 │     signIn: '/admin/login',
+ 57 │     error: '/admin/error',
+ 58 │   },
+ 59 │   callbacks: {
+ 60 │     async jwt({ token, user }) {
+ 61 │       if (user) {
+ 62 │         token.role = user.role
+ 63 │       }
+ 64 │       return token
+ 65 │     },
+ 66 │     async session({ session, token }) {
+ 67 │       if (token) {
+ 68 │         session.user.id = token.sub!
+ 69 │         session.user.role = token.role as string
+ 70 │       }
+ 71 │       return session
+ 72 │     }
+ 73 │   },
+ 74 │   secret: process.env.NEXTAUTH_SECRET,
+ 75 │ }
+ 76 │ import { NextAuthOptions } from "next-auth"
+ 77 │ import { PrismaAdapter } from "@auth/prisma-adapter"
+ 78 │ import CredentialsProvider from "next-auth/providers/credentials"
+ 79 │ import bcrypt from "bcryptjs"
+ 80 │ import { db } from "./db"
+ 81 │ 
+ 82 │ export const authOptions: NextAuthOptions = {
+    ·              ─────┬─────
+    ·                   ╰── `authOptions` redefined here
+ 83 │   adapter: PrismaAdapter(db),
+ 84 │   providers: [
+ 85 │     CredentialsProvider({
+    ╰────
+
+Import trace for requested module:
+./src/lib/auth.ts
+./src/app/(auth)/admin/page.tsx
+ GET /admin 500 in 33604ms
