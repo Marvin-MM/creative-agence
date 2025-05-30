@@ -1,0 +1,5 @@
+
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="100" fill="#d1d5db"/>
+  <text x="100" y="110" text-anchor="middle" fill="#6b7280" font-size="16" font-family="Arial">Sarah</text>
+</svg>
