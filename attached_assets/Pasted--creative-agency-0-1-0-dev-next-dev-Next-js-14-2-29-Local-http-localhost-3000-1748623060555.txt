@@ -1,0 +1,1899 @@
+
+> creative-agency@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.29
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'serverExternalPackages'
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 2.2s
+ ○ Compiling / ...
+ ⨯ ./src/lib/validations.ts
+Error: 
+  × the name `newsletterSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:41:1]
+  41 │ })
+  42 │ 
+  43 │ // Newsletter subscription validation schema
+  44 │ export const newsletterSchema = yup.object({
+     ·              ────────┬───────
+     ·                      ╰── previous definition of `newsletterSchema` here
+  45 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  46 │   source: yup.string().optional(),
+  47 │ })
+  48 │ 
+  49 │ // FAQ validation schema
+  50 │ export const faqSchema = yup.object({
+  51 │   question: yup.string().required('Question is required').min(10, 'Question must be at least 10 characters'),
+  52 │   answer: yup.string().required('Answer is required').min(20, 'Answer must be at least 20 characters'),
+  53 │   order: yup.number().integer().min(0).default(0),
+  54 │   active: yup.boolean().default(true),
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+     ·              ────────┬───────
+     ·                      ╰── `newsletterSchema` redefined here
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+     ╰────
+
+  × the name `projectSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:2:1]
+   2 │ import * as yup from 'yup'
+   3 │ 
+   4 │ // Project validation schema
+   5 │ export const projectSchema = yup.object({
+     ·              ──────┬──────
+     ·                    ╰── previous definition of `projectSchema` here
+   6 │   title: yup.string().required('Title is required').min(3, 'Title must be at least 3 characters'),
+   7 │   description: yup.string().required('Description is required').min(10, 'Description must be at least 10 characters'),
+   8 │   client: yup.string().required('Client name is required'),
+   9 │   role: yup.string().required('Role is required'),
+  10 │   services: yup.array().of(yup.string()).min(1, 'At least one service is required'),
+  11 │   results: yup.string().optional(),
+  12 │   featured: yup.boolean().default(false),
+  13 │   published: yup.boolean().default(true),
+  14 │   category: yup.string().required('Category is required'),
+  15 │   tags: yup.array().of(yup.string()).min(1, 'At least one tag is required'),
+  16 │   images: yup.array().of(yup.string()).min(1, 'At least one image is required'),
+  17 │   videos: yup.array().of(yup.string()).optional(),
+  18 │ })
+  19 │ 
+  20 │ // Blog post validation schema
+  21 │ export const blogPostSchema = yup.object({
+  22 │   title: yup.string().required('Title is required').min(5, 'Title must be at least 5 characters'),
+  23 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+  24 │   excerpt: yup.string().optional().max(200, 'Excerpt must be less than 200 characters'),
+  25 │   coverImage: yup.string().optional(),
+  26 │   published: yup.boolean().default(false),
+  27 │   tags: yup.array().of(yup.string()).min(1, 'At least one tag is required'),
+  28 │ })
+  29 │ 
+  30 │ // Contact form validation schema
+  31 │ export const contactSchema = yup.object({
+  32 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  33 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  34 │   company: yup.string().optional(),
+  35 │   subject: yup.string().required('Subject is required').min(5, 'Subject must be at least 5 characters'),
+  36 │   message: yup.string().required('Message is required').min(20, 'Message must be at least 20 characters'),
+  37 │   phone: yup.string().optional(),
+  38 │   budget: yup.string().optional(),
+  39 │   timeline: yup.string().optional(),
+  40 │   services: yup.array().of(yup.string()).optional(),
+  41 │ })
+  42 │ 
+  43 │ // Newsletter subscription validation schema
+  44 │ export const newsletterSchema = yup.object({
+  45 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  46 │   source: yup.string().optional(),
+  47 │ })
+  48 │ 
+  49 │ // FAQ validation schema
+  50 │ export const faqSchema = yup.object({
+  51 │   question: yup.string().required('Question is required').min(10, 'Question must be at least 10 characters'),
+  52 │   answer: yup.string().required('Answer is required').min(20, 'Answer must be at least 20 characters'),
+  53 │   order: yup.number().integer().min(0).default(0),
+  54 │   active: yup.boolean().default(true),
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+     ·              ──────┬──────
+     ·                    ╰── `projectSchema` redefined here
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+     ╰────
+
+  × the name `blogPostSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:18:1]
+  18 │ })
+  19 │ 
+  20 │ // Blog post validation schema
+  21 │ export const blogPostSchema = yup.object({
+     ·              ───────┬──────
+     ·                     ╰── previous definition of `blogPostSchema` here
+  22 │   title: yup.string().required('Title is required').min(5, 'Title must be at least 5 characters'),
+  23 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+  24 │   excerpt: yup.string().optional().max(200, 'Excerpt must be less than 200 characters'),
+  25 │   coverImage: yup.string().optional(),
+  26 │   published: yup.boolean().default(false),
+  27 │   tags: yup.array().of(yup.string()).min(1, 'At least one tag is required'),
+  28 │ })
+  29 │ 
+  30 │ // Contact form validation schema
+  31 │ export const contactSchema = yup.object({
+  32 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  33 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  34 │   company: yup.string().optional(),
+  35 │   subject: yup.string().required('Subject is required').min(5, 'Subject must be at least 5 characters'),
+  36 │   message: yup.string().required('Message is required').min(20, 'Message must be at least 20 characters'),
+  37 │   phone: yup.string().optional(),
+  38 │   budget: yup.string().optional(),
+  39 │   timeline: yup.string().optional(),
+  40 │   services: yup.array().of(yup.string()).optional(),
+  41 │ })
+  42 │ 
+  43 │ // Newsletter subscription validation schema
+  44 │ export const newsletterSchema = yup.object({
+  45 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  46 │   source: yup.string().optional(),
+  47 │ })
+  48 │ 
+  49 │ // FAQ validation schema
+  50 │ export const faqSchema = yup.object({
+  51 │   question: yup.string().required('Question is required').min(10, 'Question must be at least 10 characters'),
+  52 │   answer: yup.string().required('Answer is required').min(20, 'Answer must be at least 20 characters'),
+  53 │   order: yup.number().integer().min(0).default(0),
+  54 │   active: yup.boolean().default(true),
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+ 113 │   content: yup.string().optional(),
+ 114 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 115 │   gallery: yup.array().of(yup.string().url()).optional(),
+ 116 │   category: yup.string().required('Category is required'),
+ 117 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 118 │   client: yup.string().optional(),
+ 119 │   year: yup.number().min(1900).max(new Date().getFullYear() + 1).optional(),
+ 120 │   url: yup.string().url('URL must be valid').optional(),
+ 121 │   featured: yup.boolean().required(),
+ 122 │   published: yup.boolean().required()
+ 123 │ })
+ 124 │ 
+ 125 │ export const blogPostSchema = yup.object({
+     ·              ───────┬──────
+     ·                     ╰── `blogPostSchema` redefined here
+ 126 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 127 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 128 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+     ╰────
+
+  × the name `userSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:75:1]
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+     ·              ─────┬────
+     ·                   ╰── previous definition of `userSchema` here
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+ 113 │   content: yup.string().optional(),
+ 114 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 115 │   gallery: yup.array().of(yup.string().url()).optional(),
+ 116 │   category: yup.string().required('Category is required'),
+ 117 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 118 │   client: yup.string().optional(),
+ 119 │   year: yup.number().min(1900).max(new Date().getFullYear() + 1).optional(),
+ 120 │   url: yup.string().url('URL must be valid').optional(),
+ 121 │   featured: yup.boolean().required(),
+ 122 │   published: yup.boolean().required()
+ 123 │ })
+ 124 │ 
+ 125 │ export const blogPostSchema = yup.object({
+ 126 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 127 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 128 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+ 129 │   excerpt: yup.string().optional(),
+ 130 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 131 │   author: yup.string().required('Author is required'),
+ 132 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 133 │   category: yup.string().optional(),
+ 134 │   published: yup.boolean().required(),
+ 135 │   featured: yup.boolean().required()
+ 136 │ })
+ 137 │ 
+ 138 │ export const signInSchema = yup.object({
+ 139 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 140 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters')
+ 141 │ })
+ 142 │ 
+ 143 │ export const userSchema = yup.object({
+     ·              ─────┬────
+     ·                   ╰── `userSchema` redefined here
+ 144 │   name: yup.string().optional(),
+ 145 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 146 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+     ╰────
+
+  × the name `faqSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:47:1]
+  47 │ })
+  48 │ 
+  49 │ // FAQ validation schema
+  50 │ export const faqSchema = yup.object({
+     ·              ────┬────
+     ·                  ╰── previous definition of `faqSchema` here
+  51 │   question: yup.string().required('Question is required').min(10, 'Question must be at least 10 characters'),
+  52 │   answer: yup.string().required('Answer is required').min(20, 'Answer must be at least 20 characters'),
+  53 │   order: yup.number().integer().min(0).default(0),
+  54 │   active: yup.boolean().default(true),
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+ 113 │   content: yup.string().optional(),
+ 114 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 115 │   gallery: yup.array().of(yup.string().url()).optional(),
+ 116 │   category: yup.string().required('Category is required'),
+ 117 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 118 │   client: yup.string().optional(),
+ 119 │   year: yup.number().min(1900).max(new Date().getFullYear() + 1).optional(),
+ 120 │   url: yup.string().url('URL must be valid').optional(),
+ 121 │   featured: yup.boolean().required(),
+ 122 │   published: yup.boolean().required()
+ 123 │ })
+ 124 │ 
+ 125 │ export const blogPostSchema = yup.object({
+ 126 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 127 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 128 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+ 129 │   excerpt: yup.string().optional(),
+ 130 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 131 │   author: yup.string().required('Author is required'),
+ 132 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 133 │   category: yup.string().optional(),
+ 134 │   published: yup.boolean().required(),
+ 135 │   featured: yup.boolean().required()
+ 136 │ })
+ 137 │ 
+ 138 │ export const signInSchema = yup.object({
+ 139 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 140 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters')
+ 141 │ })
+ 142 │ 
+ 143 │ export const userSchema = yup.object({
+ 144 │   name: yup.string().optional(),
+ 145 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 146 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+ 147 │   role: yup.string().oneOf(['USER', 'ADMIN']).required('Role is required')
+ 148 │ })
+ 149 │ 
+ 150 │ export const faqSchema = yup.object({
+     ·              ────┬────
+     ·                  ╰── `faqSchema` redefined here
+ 151 │   question: yup.string().required('Question is required').min(5, 'Question must be at least 5 characters'),
+ 152 │   answer: yup.string().required('Answer is required').min(10, 'Answer must be at least 10 characters'),
+ 153 │   category: yup.string().optional(),
+     ╰────
+
+  × the name `teamMemberSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:55:1]
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+     ·              ────────┬───────
+     ·                      ╰── previous definition of `teamMemberSchema` here
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+ 113 │   content: yup.string().optional(),
+ 114 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 115 │   gallery: yup.array().of(yup.string().url()).optional(),
+ 116 │   category: yup.string().required('Category is required'),
+ 117 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 118 │   client: yup.string().optional(),
+ 119 │   year: yup.number().min(1900).max(new Date().getFullYear() + 1).optional(),
+ 120 │   url: yup.string().url('URL must be valid').optional(),
+ 121 │   featured: yup.boolean().required(),
+ 122 │   published: yup.boolean().required()
+ 123 │ })
+ 124 │ 
+ 125 │ export const blogPostSchema = yup.object({
+ 126 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 127 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 128 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+ 129 │   excerpt: yup.string().optional(),
+ 130 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 131 │   author: yup.string().required('Author is required'),
+ 132 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 133 │   category: yup.string().optional(),
+ 134 │   published: yup.boolean().required(),
+ 135 │   featured: yup.boolean().required()
+ 136 │ })
+ 137 │ 
+ 138 │ export const signInSchema = yup.object({
+ 139 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 140 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters')
+ 141 │ })
+ 142 │ 
+ 143 │ export const userSchema = yup.object({
+ 144 │   name: yup.string().optional(),
+ 145 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 146 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+ 147 │   role: yup.string().oneOf(['USER', 'ADMIN']).required('Role is required')
+ 148 │ })
+ 149 │ 
+ 150 │ export const faqSchema = yup.object({
+ 151 │   question: yup.string().required('Question is required').min(5, 'Question must be at least 5 characters'),
+ 152 │   answer: yup.string().required('Answer is required').min(10, 'Answer must be at least 10 characters'),
+ 153 │   category: yup.string().optional(),
+ 154 │   order: yup.number().min(0).required('Order is required'),
+ 155 │   active: yup.boolean().required()
+ 156 │ })
+ 157 │ 
+ 158 │ export const teamMemberSchema = yup.object({
+     ·              ────────┬───────
+     ·                      ╰── `teamMemberSchema` redefined here
+ 159 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+ 160 │   role: yup.string().required('Role is required'),
+ 161 │   bio: yup.string().optional(),
+     ╰────
+
+Import trace for requested module:
+./src/lib/validations.ts
+./src/components/sections/newsletter-section.tsx
+ ⨯ ./src/lib/validations.ts
+Error: 
+  × the name `newsletterSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:41:1]
+  41 │ })
+  42 │ 
+  43 │ // Newsletter subscription validation schema
+  44 │ export const newsletterSchema = yup.object({
+     ·              ────────┬───────
+     ·                      ╰── previous definition of `newsletterSchema` here
+  45 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  46 │   source: yup.string().optional(),
+  47 │ })
+  48 │ 
+  49 │ // FAQ validation schema
+  50 │ export const faqSchema = yup.object({
+  51 │   question: yup.string().required('Question is required').min(10, 'Question must be at least 10 characters'),
+  52 │   answer: yup.string().required('Answer is required').min(20, 'Answer must be at least 20 characters'),
+  53 │   order: yup.number().integer().min(0).default(0),
+  54 │   active: yup.boolean().default(true),
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+     ·              ────────┬───────
+     ·                      ╰── `newsletterSchema` redefined here
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+     ╰────
+
+  × the name `projectSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:2:1]
+   2 │ import * as yup from 'yup'
+   3 │ 
+   4 │ // Project validation schema
+   5 │ export const projectSchema = yup.object({
+     ·              ──────┬──────
+     ·                    ╰── previous definition of `projectSchema` here
+   6 │   title: yup.string().required('Title is required').min(3, 'Title must be at least 3 characters'),
+   7 │   description: yup.string().required('Description is required').min(10, 'Description must be at least 10 characters'),
+   8 │   client: yup.string().required('Client name is required'),
+   9 │   role: yup.string().required('Role is required'),
+  10 │   services: yup.array().of(yup.string()).min(1, 'At least one service is required'),
+  11 │   results: yup.string().optional(),
+  12 │   featured: yup.boolean().default(false),
+  13 │   published: yup.boolean().default(true),
+  14 │   category: yup.string().required('Category is required'),
+  15 │   tags: yup.array().of(yup.string()).min(1, 'At least one tag is required'),
+  16 │   images: yup.array().of(yup.string()).min(1, 'At least one image is required'),
+  17 │   videos: yup.array().of(yup.string()).optional(),
+  18 │ })
+  19 │ 
+  20 │ // Blog post validation schema
+  21 │ export const blogPostSchema = yup.object({
+  22 │   title: yup.string().required('Title is required').min(5, 'Title must be at least 5 characters'),
+  23 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+  24 │   excerpt: yup.string().optional().max(200, 'Excerpt must be less than 200 characters'),
+  25 │   coverImage: yup.string().optional(),
+  26 │   published: yup.boolean().default(false),
+  27 │   tags: yup.array().of(yup.string()).min(1, 'At least one tag is required'),
+  28 │ })
+  29 │ 
+  30 │ // Contact form validation schema
+  31 │ export const contactSchema = yup.object({
+  32 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  33 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  34 │   company: yup.string().optional(),
+  35 │   subject: yup.string().required('Subject is required').min(5, 'Subject must be at least 5 characters'),
+  36 │   message: yup.string().required('Message is required').min(20, 'Message must be at least 20 characters'),
+  37 │   phone: yup.string().optional(),
+  38 │   budget: yup.string().optional(),
+  39 │   timeline: yup.string().optional(),
+  40 │   services: yup.array().of(yup.string()).optional(),
+  41 │ })
+  42 │ 
+  43 │ // Newsletter subscription validation schema
+  44 │ export const newsletterSchema = yup.object({
+  45 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  46 │   source: yup.string().optional(),
+  47 │ })
+  48 │ 
+  49 │ // FAQ validation schema
+  50 │ export const faqSchema = yup.object({
+  51 │   question: yup.string().required('Question is required').min(10, 'Question must be at least 10 characters'),
+  52 │   answer: yup.string().required('Answer is required').min(20, 'Answer must be at least 20 characters'),
+  53 │   order: yup.number().integer().min(0).default(0),
+  54 │   active: yup.boolean().default(true),
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+     ·              ──────┬──────
+     ·                    ╰── `projectSchema` redefined here
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+     ╰────
+
+  × the name `blogPostSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:18:1]
+  18 │ })
+  19 │ 
+  20 │ // Blog post validation schema
+  21 │ export const blogPostSchema = yup.object({
+     ·              ───────┬──────
+     ·                     ╰── previous definition of `blogPostSchema` here
+  22 │   title: yup.string().required('Title is required').min(5, 'Title must be at least 5 characters'),
+  23 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+  24 │   excerpt: yup.string().optional().max(200, 'Excerpt must be less than 200 characters'),
+  25 │   coverImage: yup.string().optional(),
+  26 │   published: yup.boolean().default(false),
+  27 │   tags: yup.array().of(yup.string()).min(1, 'At least one tag is required'),
+  28 │ })
+  29 │ 
+  30 │ // Contact form validation schema
+  31 │ export const contactSchema = yup.object({
+  32 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  33 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  34 │   company: yup.string().optional(),
+  35 │   subject: yup.string().required('Subject is required').min(5, 'Subject must be at least 5 characters'),
+  36 │   message: yup.string().required('Message is required').min(20, 'Message must be at least 20 characters'),
+  37 │   phone: yup.string().optional(),
+  38 │   budget: yup.string().optional(),
+  39 │   timeline: yup.string().optional(),
+  40 │   services: yup.array().of(yup.string()).optional(),
+  41 │ })
+  42 │ 
+  43 │ // Newsletter subscription validation schema
+  44 │ export const newsletterSchema = yup.object({
+  45 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  46 │   source: yup.string().optional(),
+  47 │ })
+  48 │ 
+  49 │ // FAQ validation schema
+  50 │ export const faqSchema = yup.object({
+  51 │   question: yup.string().required('Question is required').min(10, 'Question must be at least 10 characters'),
+  52 │   answer: yup.string().required('Answer is required').min(20, 'Answer must be at least 20 characters'),
+  53 │   order: yup.number().integer().min(0).default(0),
+  54 │   active: yup.boolean().default(true),
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+ 113 │   content: yup.string().optional(),
+ 114 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 115 │   gallery: yup.array().of(yup.string().url()).optional(),
+ 116 │   category: yup.string().required('Category is required'),
+ 117 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 118 │   client: yup.string().optional(),
+ 119 │   year: yup.number().min(1900).max(new Date().getFullYear() + 1).optional(),
+ 120 │   url: yup.string().url('URL must be valid').optional(),
+ 121 │   featured: yup.boolean().required(),
+ 122 │   published: yup.boolean().required()
+ 123 │ })
+ 124 │ 
+ 125 │ export const blogPostSchema = yup.object({
+     ·              ───────┬──────
+     ·                     ╰── `blogPostSchema` redefined here
+ 126 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 127 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 128 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+     ╰────
+
+  × the name `userSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:75:1]
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+     ·              ─────┬────
+     ·                   ╰── previous definition of `userSchema` here
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+ 113 │   content: yup.string().optional(),
+ 114 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 115 │   gallery: yup.array().of(yup.string().url()).optional(),
+ 116 │   category: yup.string().required('Category is required'),
+ 117 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 118 │   client: yup.string().optional(),
+ 119 │   year: yup.number().min(1900).max(new Date().getFullYear() + 1).optional(),
+ 120 │   url: yup.string().url('URL must be valid').optional(),
+ 121 │   featured: yup.boolean().required(),
+ 122 │   published: yup.boolean().required()
+ 123 │ })
+ 124 │ 
+ 125 │ export const blogPostSchema = yup.object({
+ 126 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 127 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 128 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+ 129 │   excerpt: yup.string().optional(),
+ 130 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 131 │   author: yup.string().required('Author is required'),
+ 132 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 133 │   category: yup.string().optional(),
+ 134 │   published: yup.boolean().required(),
+ 135 │   featured: yup.boolean().required()
+ 136 │ })
+ 137 │ 
+ 138 │ export const signInSchema = yup.object({
+ 139 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 140 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters')
+ 141 │ })
+ 142 │ 
+ 143 │ export const userSchema = yup.object({
+     ·              ─────┬────
+     ·                   ╰── `userSchema` redefined here
+ 144 │   name: yup.string().optional(),
+ 145 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 146 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+     ╰────
+
+  × the name `faqSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:47:1]
+  47 │ })
+  48 │ 
+  49 │ // FAQ validation schema
+  50 │ export const faqSchema = yup.object({
+     ·              ────┬────
+     ·                  ╰── previous definition of `faqSchema` here
+  51 │   question: yup.string().required('Question is required').min(10, 'Question must be at least 10 characters'),
+  52 │   answer: yup.string().required('Answer is required').min(20, 'Answer must be at least 20 characters'),
+  53 │   order: yup.number().integer().min(0).default(0),
+  54 │   active: yup.boolean().default(true),
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+ 113 │   content: yup.string().optional(),
+ 114 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 115 │   gallery: yup.array().of(yup.string().url()).optional(),
+ 116 │   category: yup.string().required('Category is required'),
+ 117 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 118 │   client: yup.string().optional(),
+ 119 │   year: yup.number().min(1900).max(new Date().getFullYear() + 1).optional(),
+ 120 │   url: yup.string().url('URL must be valid').optional(),
+ 121 │   featured: yup.boolean().required(),
+ 122 │   published: yup.boolean().required()
+ 123 │ })
+ 124 │ 
+ 125 │ export const blogPostSchema = yup.object({
+ 126 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 127 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 128 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+ 129 │   excerpt: yup.string().optional(),
+ 130 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 131 │   author: yup.string().required('Author is required'),
+ 132 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 133 │   category: yup.string().optional(),
+ 134 │   published: yup.boolean().required(),
+ 135 │   featured: yup.boolean().required()
+ 136 │ })
+ 137 │ 
+ 138 │ export const signInSchema = yup.object({
+ 139 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 140 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters')
+ 141 │ })
+ 142 │ 
+ 143 │ export const userSchema = yup.object({
+ 144 │   name: yup.string().optional(),
+ 145 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 146 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+ 147 │   role: yup.string().oneOf(['USER', 'ADMIN']).required('Role is required')
+ 148 │ })
+ 149 │ 
+ 150 │ export const faqSchema = yup.object({
+     ·              ────┬────
+     ·                  ╰── `faqSchema` redefined here
+ 151 │   question: yup.string().required('Question is required').min(5, 'Question must be at least 5 characters'),
+ 152 │   answer: yup.string().required('Answer is required').min(10, 'Answer must be at least 10 characters'),
+ 153 │   category: yup.string().optional(),
+     ╰────
+
+  × the name `teamMemberSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:55:1]
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+     ·              ────────┬───────
+     ·                      ╰── previous definition of `teamMemberSchema` here
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+ 113 │   content: yup.string().optional(),
+ 114 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 115 │   gallery: yup.array().of(yup.string().url()).optional(),
+ 116 │   category: yup.string().required('Category is required'),
+ 117 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 118 │   client: yup.string().optional(),
+ 119 │   year: yup.number().min(1900).max(new Date().getFullYear() + 1).optional(),
+ 120 │   url: yup.string().url('URL must be valid').optional(),
+ 121 │   featured: yup.boolean().required(),
+ 122 │   published: yup.boolean().required()
+ 123 │ })
+ 124 │ 
+ 125 │ export const blogPostSchema = yup.object({
+ 126 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 127 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 128 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+ 129 │   excerpt: yup.string().optional(),
+ 130 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 131 │   author: yup.string().required('Author is required'),
+ 132 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 133 │   category: yup.string().optional(),
+ 134 │   published: yup.boolean().required(),
+ 135 │   featured: yup.boolean().required()
+ 136 │ })
+ 137 │ 
+ 138 │ export const signInSchema = yup.object({
+ 139 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 140 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters')
+ 141 │ })
+ 142 │ 
+ 143 │ export const userSchema = yup.object({
+ 144 │   name: yup.string().optional(),
+ 145 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 146 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+ 147 │   role: yup.string().oneOf(['USER', 'ADMIN']).required('Role is required')
+ 148 │ })
+ 149 │ 
+ 150 │ export const faqSchema = yup.object({
+ 151 │   question: yup.string().required('Question is required').min(5, 'Question must be at least 5 characters'),
+ 152 │   answer: yup.string().required('Answer is required').min(10, 'Answer must be at least 10 characters'),
+ 153 │   category: yup.string().optional(),
+ 154 │   order: yup.number().min(0).required('Order is required'),
+ 155 │   active: yup.boolean().required()
+ 156 │ })
+ 157 │ 
+ 158 │ export const teamMemberSchema = yup.object({
+     ·              ────────┬───────
+     ·                      ╰── `teamMemberSchema` redefined here
+ 159 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+ 160 │   role: yup.string().required('Role is required'),
+ 161 │   bio: yup.string().optional(),
+     ╰────
+
+Import trace for requested module:
+./src/lib/validations.ts
+./src/components/sections/newsletter-section.tsx
+ ⨯ ./src/lib/validations.ts
+Error: 
+  × the name `newsletterSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:41:1]
+  41 │ })
+  42 │ 
+  43 │ // Newsletter subscription validation schema
+  44 │ export const newsletterSchema = yup.object({
+     ·              ────────┬───────
+     ·                      ╰── previous definition of `newsletterSchema` here
+  45 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  46 │   source: yup.string().optional(),
+  47 │ })
+  48 │ 
+  49 │ // FAQ validation schema
+  50 │ export const faqSchema = yup.object({
+  51 │   question: yup.string().required('Question is required').min(10, 'Question must be at least 10 characters'),
+  52 │   answer: yup.string().required('Answer is required').min(20, 'Answer must be at least 20 characters'),
+  53 │   order: yup.number().integer().min(0).default(0),
+  54 │   active: yup.boolean().default(true),
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+     ·              ────────┬───────
+     ·                      ╰── `newsletterSchema` redefined here
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+     ╰────
+
+  × the name `projectSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:2:1]
+   2 │ import * as yup from 'yup'
+   3 │ 
+   4 │ // Project validation schema
+   5 │ export const projectSchema = yup.object({
+     ·              ──────┬──────
+     ·                    ╰── previous definition of `projectSchema` here
+   6 │   title: yup.string().required('Title is required').min(3, 'Title must be at least 3 characters'),
+   7 │   description: yup.string().required('Description is required').min(10, 'Description must be at least 10 characters'),
+   8 │   client: yup.string().required('Client name is required'),
+   9 │   role: yup.string().required('Role is required'),
+  10 │   services: yup.array().of(yup.string()).min(1, 'At least one service is required'),
+  11 │   results: yup.string().optional(),
+  12 │   featured: yup.boolean().default(false),
+  13 │   published: yup.boolean().default(true),
+  14 │   category: yup.string().required('Category is required'),
+  15 │   tags: yup.array().of(yup.string()).min(1, 'At least one tag is required'),
+  16 │   images: yup.array().of(yup.string()).min(1, 'At least one image is required'),
+  17 │   videos: yup.array().of(yup.string()).optional(),
+  18 │ })
+  19 │ 
+  20 │ // Blog post validation schema
+  21 │ export const blogPostSchema = yup.object({
+  22 │   title: yup.string().required('Title is required').min(5, 'Title must be at least 5 characters'),
+  23 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+  24 │   excerpt: yup.string().optional().max(200, 'Excerpt must be less than 200 characters'),
+  25 │   coverImage: yup.string().optional(),
+  26 │   published: yup.boolean().default(false),
+  27 │   tags: yup.array().of(yup.string()).min(1, 'At least one tag is required'),
+  28 │ })
+  29 │ 
+  30 │ // Contact form validation schema
+  31 │ export const contactSchema = yup.object({
+  32 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  33 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  34 │   company: yup.string().optional(),
+  35 │   subject: yup.string().required('Subject is required').min(5, 'Subject must be at least 5 characters'),
+  36 │   message: yup.string().required('Message is required').min(20, 'Message must be at least 20 characters'),
+  37 │   phone: yup.string().optional(),
+  38 │   budget: yup.string().optional(),
+  39 │   timeline: yup.string().optional(),
+  40 │   services: yup.array().of(yup.string()).optional(),
+  41 │ })
+  42 │ 
+  43 │ // Newsletter subscription validation schema
+  44 │ export const newsletterSchema = yup.object({
+  45 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  46 │   source: yup.string().optional(),
+  47 │ })
+  48 │ 
+  49 │ // FAQ validation schema
+  50 │ export const faqSchema = yup.object({
+  51 │   question: yup.string().required('Question is required').min(10, 'Question must be at least 10 characters'),
+  52 │   answer: yup.string().required('Answer is required').min(20, 'Answer must be at least 20 characters'),
+  53 │   order: yup.number().integer().min(0).default(0),
+  54 │   active: yup.boolean().default(true),
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+     ·              ──────┬──────
+     ·                    ╰── `projectSchema` redefined here
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+     ╰────
+
+  × the name `blogPostSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:18:1]
+  18 │ })
+  19 │ 
+  20 │ // Blog post validation schema
+  21 │ export const blogPostSchema = yup.object({
+     ·              ───────┬──────
+     ·                     ╰── previous definition of `blogPostSchema` here
+  22 │   title: yup.string().required('Title is required').min(5, 'Title must be at least 5 characters'),
+  23 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+  24 │   excerpt: yup.string().optional().max(200, 'Excerpt must be less than 200 characters'),
+  25 │   coverImage: yup.string().optional(),
+  26 │   published: yup.boolean().default(false),
+  27 │   tags: yup.array().of(yup.string()).min(1, 'At least one tag is required'),
+  28 │ })
+  29 │ 
+  30 │ // Contact form validation schema
+  31 │ export const contactSchema = yup.object({
+  32 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  33 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  34 │   company: yup.string().optional(),
+  35 │   subject: yup.string().required('Subject is required').min(5, 'Subject must be at least 5 characters'),
+  36 │   message: yup.string().required('Message is required').min(20, 'Message must be at least 20 characters'),
+  37 │   phone: yup.string().optional(),
+  38 │   budget: yup.string().optional(),
+  39 │   timeline: yup.string().optional(),
+  40 │   services: yup.array().of(yup.string()).optional(),
+  41 │ })
+  42 │ 
+  43 │ // Newsletter subscription validation schema
+  44 │ export const newsletterSchema = yup.object({
+  45 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  46 │   source: yup.string().optional(),
+  47 │ })
+  48 │ 
+  49 │ // FAQ validation schema
+  50 │ export const faqSchema = yup.object({
+  51 │   question: yup.string().required('Question is required').min(10, 'Question must be at least 10 characters'),
+  52 │   answer: yup.string().required('Answer is required').min(20, 'Answer must be at least 20 characters'),
+  53 │   order: yup.number().integer().min(0).default(0),
+  54 │   active: yup.boolean().default(true),
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+ 113 │   content: yup.string().optional(),
+ 114 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 115 │   gallery: yup.array().of(yup.string().url()).optional(),
+ 116 │   category: yup.string().required('Category is required'),
+ 117 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 118 │   client: yup.string().optional(),
+ 119 │   year: yup.number().min(1900).max(new Date().getFullYear() + 1).optional(),
+ 120 │   url: yup.string().url('URL must be valid').optional(),
+ 121 │   featured: yup.boolean().required(),
+ 122 │   published: yup.boolean().required()
+ 123 │ })
+ 124 │ 
+ 125 │ export const blogPostSchema = yup.object({
+     ·              ───────┬──────
+     ·                     ╰── `blogPostSchema` redefined here
+ 126 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 127 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 128 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+     ╰────
+
+  × the name `userSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:75:1]
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+     ·              ─────┬────
+     ·                   ╰── previous definition of `userSchema` here
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+ 113 │   content: yup.string().optional(),
+ 114 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 115 │   gallery: yup.array().of(yup.string().url()).optional(),
+ 116 │   category: yup.string().required('Category is required'),
+ 117 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 118 │   client: yup.string().optional(),
+ 119 │   year: yup.number().min(1900).max(new Date().getFullYear() + 1).optional(),
+ 120 │   url: yup.string().url('URL must be valid').optional(),
+ 121 │   featured: yup.boolean().required(),
+ 122 │   published: yup.boolean().required()
+ 123 │ })
+ 124 │ 
+ 125 │ export const blogPostSchema = yup.object({
+ 126 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 127 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 128 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+ 129 │   excerpt: yup.string().optional(),
+ 130 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 131 │   author: yup.string().required('Author is required'),
+ 132 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 133 │   category: yup.string().optional(),
+ 134 │   published: yup.boolean().required(),
+ 135 │   featured: yup.boolean().required()
+ 136 │ })
+ 137 │ 
+ 138 │ export const signInSchema = yup.object({
+ 139 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 140 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters')
+ 141 │ })
+ 142 │ 
+ 143 │ export const userSchema = yup.object({
+     ·              ─────┬────
+     ·                   ╰── `userSchema` redefined here
+ 144 │   name: yup.string().optional(),
+ 145 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 146 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+     ╰────
+
+  × the name `faqSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:47:1]
+  47 │ })
+  48 │ 
+  49 │ // FAQ validation schema
+  50 │ export const faqSchema = yup.object({
+     ·              ────┬────
+     ·                  ╰── previous definition of `faqSchema` here
+  51 │   question: yup.string().required('Question is required').min(10, 'Question must be at least 10 characters'),
+  52 │   answer: yup.string().required('Answer is required').min(20, 'Answer must be at least 20 characters'),
+  53 │   order: yup.number().integer().min(0).default(0),
+  54 │   active: yup.boolean().default(true),
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+ 113 │   content: yup.string().optional(),
+ 114 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 115 │   gallery: yup.array().of(yup.string().url()).optional(),
+ 116 │   category: yup.string().required('Category is required'),
+ 117 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 118 │   client: yup.string().optional(),
+ 119 │   year: yup.number().min(1900).max(new Date().getFullYear() + 1).optional(),
+ 120 │   url: yup.string().url('URL must be valid').optional(),
+ 121 │   featured: yup.boolean().required(),
+ 122 │   published: yup.boolean().required()
+ 123 │ })
+ 124 │ 
+ 125 │ export const blogPostSchema = yup.object({
+ 126 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 127 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 128 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+ 129 │   excerpt: yup.string().optional(),
+ 130 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 131 │   author: yup.string().required('Author is required'),
+ 132 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 133 │   category: yup.string().optional(),
+ 134 │   published: yup.boolean().required(),
+ 135 │   featured: yup.boolean().required()
+ 136 │ })
+ 137 │ 
+ 138 │ export const signInSchema = yup.object({
+ 139 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 140 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters')
+ 141 │ })
+ 142 │ 
+ 143 │ export const userSchema = yup.object({
+ 144 │   name: yup.string().optional(),
+ 145 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 146 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+ 147 │   role: yup.string().oneOf(['USER', 'ADMIN']).required('Role is required')
+ 148 │ })
+ 149 │ 
+ 150 │ export const faqSchema = yup.object({
+     ·              ────┬────
+     ·                  ╰── `faqSchema` redefined here
+ 151 │   question: yup.string().required('Question is required').min(5, 'Question must be at least 5 characters'),
+ 152 │   answer: yup.string().required('Answer is required').min(10, 'Answer must be at least 10 characters'),
+ 153 │   category: yup.string().optional(),
+     ╰────
+
+  × the name `teamMemberSchema` is defined multiple times
+     ╭─[/home/runner/workspace/src/lib/validations.ts:55:1]
+  55 │ })
+  56 │ 
+  57 │ // Team member validation schema
+  58 │ export const teamMemberSchema = yup.object({
+     ·              ────────┬───────
+     ·                      ╰── previous definition of `teamMemberSchema` here
+  59 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  60 │   role: yup.string().required('Role is required'),
+  61 │   bio: yup.string().required('Bio is required').min(50, 'Bio must be at least 50 characters'),
+  62 │   image: yup.string().optional(),
+  63 │   email: yup.string().email('Invalid email address').optional(),
+  64 │   linkedin: yup.string().url('Invalid LinkedIn URL').optional(),
+  65 │   twitter: yup.string().url('Invalid Twitter URL').optional(),
+  66 │   order: yup.number().integer().min(0).default(0),
+  67 │   active: yup.boolean().default(true),
+  68 │ })
+  69 │ 
+  70 │ // Company info validation schema
+  71 │ export const companyInfoSchema = yup.object({
+  72 │   key: yup.string().required('Key is required'),
+  73 │   value: yup.string().required('Value is required'),
+  74 │   description: yup.string().optional(),
+  75 │ })
+  76 │ 
+  77 │ // User validation schema
+  78 │ export const userSchema = yup.object({
+  79 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  80 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  81 │   password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  82 │   role: yup.string().oneOf(['ADMIN', 'EDITOR']).default('ADMIN'),
+  83 │ })
+  84 │ 
+  85 │ // Login validation schema
+  86 │ export const loginSchema = yup.object({
+  87 │   email: yup.string().email('Invalid email address').required('Email is required'),
+  88 │   password: yup.string().required('Password is required'),
+  89 │ })
+  90 │ import * as yup from 'yup'
+  91 │ 
+  92 │ export const contactFormSchema = yup.object({
+  93 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+  94 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+  95 │   company: yup.string().optional(),
+  96 │   phone: yup.string().optional(),
+  97 │   subject: yup.string().optional(),
+  98 │   message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+  99 │   budget: yup.string().optional(),
+ 100 │   timeline: yup.string().optional(),
+ 101 │   services: yup.array().of(yup.string()).optional()
+ 102 │ })
+ 103 │ 
+ 104 │ export const newsletterSchema = yup.object({
+ 105 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 106 │   name: yup.string().optional()
+ 107 │ })
+ 108 │ 
+ 109 │ export const projectSchema = yup.object({
+ 110 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 111 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 112 │   description: yup.string().optional(),
+ 113 │   content: yup.string().optional(),
+ 114 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 115 │   gallery: yup.array().of(yup.string().url()).optional(),
+ 116 │   category: yup.string().required('Category is required'),
+ 117 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 118 │   client: yup.string().optional(),
+ 119 │   year: yup.number().min(1900).max(new Date().getFullYear() + 1).optional(),
+ 120 │   url: yup.string().url('URL must be valid').optional(),
+ 121 │   featured: yup.boolean().required(),
+ 122 │   published: yup.boolean().required()
+ 123 │ })
+ 124 │ 
+ 125 │ export const blogPostSchema = yup.object({
+ 126 │   title: yup.string().required('Title is required').min(2, 'Title must be at least 2 characters'),
+ 127 │   slug: yup.string().required('Slug is required').matches(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
+ 128 │   content: yup.string().required('Content is required').min(50, 'Content must be at least 50 characters'),
+ 129 │   excerpt: yup.string().optional(),
+ 130 │   image: yup.string().url('Image must be a valid URL').optional(),
+ 131 │   author: yup.string().required('Author is required'),
+ 132 │   tags: yup.array().of(yup.string()).required('At least one tag is required'),
+ 133 │   category: yup.string().optional(),
+ 134 │   published: yup.boolean().required(),
+ 135 │   featured: yup.boolean().required()
+ 136 │ })
+ 137 │ 
+ 138 │ export const signInSchema = yup.object({
+ 139 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 140 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters')
+ 141 │ })
+ 142 │ 
+ 143 │ export const userSchema = yup.object({
+ 144 │   name: yup.string().optional(),
+ 145 │   email: yup.string().required('Email is required').email('Please enter a valid email'),
+ 146 │   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+ 147 │   role: yup.string().oneOf(['USER', 'ADMIN']).required('Role is required')
+ 148 │ })
+ 149 │ 
+ 150 │ export const faqSchema = yup.object({
+ 151 │   question: yup.string().required('Question is required').min(5, 'Question must be at least 5 characters'),
+ 152 │   answer: yup.string().required('Answer is required').min(10, 'Answer must be at least 10 characters'),
+ 153 │   category: yup.string().optional(),
+ 154 │   order: yup.number().min(0).required('Order is required'),
+ 155 │   active: yup.boolean().required()
+ 156 │ })
+ 157 │ 
+ 158 │ export const teamMemberSchema = yup.object({
+     ·              ────────┬───────
+     ·                      ╰── `teamMemberSchema` redefined here
+ 159 │   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+ 160 │   role: yup.string().required('Role is required'),
+ 161 │   bio: yup.string().optional(),
+     ╰────
+
+Import trace for requested module:
+./src/lib/validations.ts
+./src/components/sections/newsletter-section.tsx
+ GET / 500 in 22116ms
+ GET / 500 in 24ms
