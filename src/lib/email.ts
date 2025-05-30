@@ -295,3 +295,135 @@ export async function testEmailConnection() {
       <body>
         <div class="container">
           <div class="header">
+import nodemailer from 'nodemailer'
+
+const transporter = nodemailer.createTransporter({
+  host: process.env.EMAIL_HOST,
+  port: parseInt(process.env.EMAIL_PORT || '587'),
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+})
+
+export interface EmailOptions {
+  to: string | string[]
+  subject: string
+  html: string
+  text?: string
+}
+
+export const sendEmail = async (options: EmailOptions): Promise<void> => {
+  const mailOptions = {
+    from: process.env.EMAIL_FROM,
+    to: Array.isArray(options.to) ? options.to.join(', ') : options.to,
+    subject: options.subject,
+    html: options.html,
+    text: options.text,
+  }
+
+  await transporter.sendMail(mailOptions)
+}
+
+// Email templates
+export const contactEmailTemplate = (data: {
+  name: string
+  email: string
+  company?: string
+  phone?: string
+  subject?: string
+  message: string
+  budget?: string
+  timeline?: string
+  services?: string[]
+}) => {
+  return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2 style="color: #333;">New Contact Form Submission</h2>
+      
+      <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <h3 style="margin-top: 0; color: #333;">Contact Details</h3>
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        ${data.company ? `<p><strong>Company:</strong> ${data.company}</p>` : ''}
+        ${data.phone ? `<p><strong>Phone:</strong> ${data.phone}</p>` : ''}
+        ${data.subject ? `<p><strong>Subject:</strong> ${data.subject}</p>` : ''}
+        ${data.budget ? `<p><strong>Budget:</strong> ${data.budget}</p>` : ''}
+        ${data.timeline ? `<p><strong>Timeline:</strong> ${data.timeline}</p>` : ''}
+        ${data.services?.length ? `<p><strong>Services:</strong> ${data.services.join(', ')}</p>` : ''}
+      </div>
+
+      <div style="background: #fff; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
+        <h3 style="margin-top: 0; color: #333;">Message</h3>
+        <p style="line-height: 1.6;">${data.message}</p>
+      </div>
+
+      <div style="margin-top: 20px; padding: 15px; background: #e8f4f8; border-radius: 8px;">
+        <p style="margin: 0; font-size: 14px; color: #666;">
+          This email was sent from the contact form on your website.
+        </p>
+      </div>
+    </div>
+  `
+}
+
+export const newsletterWelcomeTemplate = (name?: string) => {
+  return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2 style="color: #333;">Welcome to Our Newsletter!</h2>
+      
+      <p>Hi ${name || 'there'},</p>
+      
+      <p>Thank you for subscribing to our newsletter! We're excited to have you on board.</p>
+      
+      <p>You'll receive updates about our latest projects, design insights, and industry news.</p>
+      
+      <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <h3 style="margin-top: 0; color: #333;">What to expect:</h3>
+        <ul>
+          <li>Latest project showcases</li>
+          <li>Design tips and tutorials</li>
+          <li>Industry insights and trends</li>
+          <li>Exclusive behind-the-scenes content</li>
+        </ul>
+      </div>
+      
+      <p>If you have any questions or feedback, feel free to reach out to us.</p>
+      
+      <p>Best regards,<br>The Team</p>
+      
+      <div style="margin-top: 30px; padding: 15px; background: #f0f0f0; border-radius: 8px; font-size: 12px; color: #666;">
+        <p style="margin: 0;">
+          You received this email because you subscribed to our newsletter.
+          If you no longer wish to receive these emails, you can unsubscribe at any time.
+        </p>
+      </div>
+    </div>
+  `
+}
+
+export const autoReplyTemplate = (name: string) => {
+  return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2 style="color: #333;">Thank You for Contacting Us!</h2>
+      
+      <p>Hi ${name},</p>
+      
+      <p>Thank you for reaching out to us. We've received your message and will get back to you within 24 hours.</p>
+      
+      <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <h3 style="margin-top: 0; color: #333;">What happens next?</h3>
+        <ol>
+          <li>Our team will review your inquiry</li>
+          <li>We'll prepare a personalized response</li>
+          <li>You'll hear from us within 24 hours</li>
+        </ol>
+      </div>
+      
+      <p>In the meantime, feel free to explore our portfolio and blog for more insights into our work.</p>
+      
+      <p>Best regards,<br>The Team</p>
+    </div>
+  `
+}

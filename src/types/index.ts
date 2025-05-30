@@ -103,3 +103,145 @@ export interface PageView {
   country?: string | null
   createdAt: Date
 }
+import { User, Project, BlogPost, ContactMessage, Newsletter, Analytics, FAQ, TeamMember } from '@prisma/client'
+
+export type { User, Project, BlogPost, ContactMessage, Newsletter, Analytics, FAQ, TeamMember }
+
+export interface ExtendedUser extends User {
+  role: string
+}
+
+export interface ProjectWithStats extends Project {
+  _count?: {
+    views: number
+  }
+}
+
+export interface BlogPostWithStats extends BlogPost {
+  _count?: {
+    views: number
+  }
+}
+
+export interface AnalyticsData {
+  totalViews: number
+  totalVisitors: number
+  totalProjects: number
+  totalBlogPosts: number
+  totalMessages: number
+  totalSubscribers: number
+  pageViews: Array<{
+    page: string
+    views: number
+  }>
+  trafficSources: Array<{
+    source: string
+    visitors: number
+  }>
+  topPages: Array<{
+    page: string
+    views: number
+  }>
+  recentActivity: Array<{
+    id: string
+    type: string
+    description: string
+    createdAt: Date
+  }>
+}
+
+export interface ContactFormData {
+  name: string
+  email: string
+  company?: string
+  phone?: string
+  subject?: string
+  message: string
+  budget?: string
+  timeline?: string
+  services?: string[]
+}
+
+export interface NewsletterFormData {
+  email: string
+  name?: string
+}
+
+export interface ProjectFormData {
+  title: string
+  slug: string
+  description?: string
+  content?: string
+  image?: string
+  gallery?: string[]
+  category: string
+  tags: string[]
+  client?: string
+  year?: number
+  url?: string
+  featured: boolean
+  published: boolean
+}
+
+export interface BlogPostFormData {
+  title: string
+  slug: string
+  content: string
+  excerpt?: string
+  image?: string
+  author: string
+  tags: string[]
+  category?: string
+  published: boolean
+  featured: boolean
+}
+
+export interface SearchParams {
+  query?: string
+  category?: string
+  tag?: string
+  page?: string
+  limit?: string
+  sort?: string
+  order?: 'asc' | 'desc'
+}
+
+export interface PaginatedResult<T> {
+  data: T[]
+  pagination: {
+    page: number
+    limit: number
+    total: number
+    pages: number
+    hasNext: boolean
+    hasPrev: boolean
+  }
+}
+
+export interface ApiResponse<T = any> {
+  success: boolean
+  data?: T
+  error?: string
+  message?: string
+}
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string
+      email: string
+      name?: string
+      role: string
+    }
+  }
+
+  interface User {
+    role: string
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    role: string
+  }
+}
