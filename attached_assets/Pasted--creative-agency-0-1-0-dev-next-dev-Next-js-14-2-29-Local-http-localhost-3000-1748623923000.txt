@@ -1,0 +1,204 @@
+
+> creative-agency@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.29
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'serverExternalPackages'
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 2.3s
+ ○ Compiling /contact ...
+ ⚠ ./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+
+./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+ GET /contact 200 in 12743ms
+ ⚠ ./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+
+./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+ ⚠ ./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+
+./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+ ⚠ ./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+
+./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+ GET /blog 404 in 203ms
+ GET /contact 200 in 102ms
+ GET /blog 404 in 30ms
+ ⚠ ./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+
+./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+ ⚠ ./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+
+./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+PrismaClientInitializationError: Unable to require(`/home/runner/workspace/node_modules/.prisma/client/libquery_engine-debian-openssl-1.1.x.so.node`).
+Prisma cannot find the required `libssl` system library in your system. Please install openssl-1.1.x and try again.
+
+Details: libssl.so.1.1: cannot open shared object file: No such file or directory
+    at Object.loadLibrary (/home/runner/workspace/node_modules/@prisma/client/runtime/library.js:111:10243)
+    at async _r.loadEngine (/home/runner/workspace/node_modules/@prisma/client/runtime/library.js:112:448)
+    at async _r.instantiateLibrary (/home/runner/workspace/node_modules/@prisma/client/runtime/library.js:111:12599) {
+  clientVersion: '5.22.0',
+  errorCode: undefined
+}
+ ⨯ unhandledRejection: PrismaClientInitializationError: Unable to require(`/home/runner/workspace/node_modules/.prisma/client/libquery_engine-debian-openssl-1.1.x.so.node`).
+Prisma cannot find the required `libssl` system library in your system. Please install openssl-1.1.x and try again.
+
+Details: libssl.so.1.1: cannot open shared object file: No such file or directory
+    at Object.loadLibrary (/home/runner/workspace/node_modules/@prisma/client/runtime/library.js:111:10243)
+    at async _r.loadEngine (/home/runner/workspace/node_modules/@prisma/client/runtime/library.js:112:448)
+    at async _r.instantiateLibrary (/home/runner/workspace/node_modules/@prisma/client/runtime/library.js:111:12599) {
+  clientVersion: '5.22.0',
+  errorCode: undefined
+}
+ ⨯ unhandledRejection: PrismaClientInitializationError: Unable to require(`/home/runner/workspace/node_modules/.prisma/client/libquery_engine-debian-openssl-1.1.x.so.node`).
+Prisma cannot find the required `libssl` system library in your system. Please install openssl-1.1.x and try again.
+
+Details: libssl.so.1.1: cannot open shared object file: No such file or directory
+    at Object.loadLibrary (/home/runner/workspace/node_modules/@prisma/client/runtime/library.js:111:10243)
+    at async _r.loadEngine (/home/runner/workspace/node_modules/@prisma/client/runtime/library.js:112:448)
+    at async _r.instantiateLibrary (/home/runner/workspace/node_modules/@prisma/client/runtime/library.js:111:12599) {
+  clientVersion: '5.22.0',
+  errorCode: undefined
+}
+prisma:error 
+Invalid `prisma.teamMember.findMany()` invocation:
+
+
+Unable to require(`/home/runner/workspace/node_modules/.prisma/client/libquery_engine-debian-openssl-1.1.x.so.node`).
+Prisma cannot find the required `libssl` system library in your system. Please install openssl-1.1.x and try again.
+
+Details: libssl.so.1.1: cannot open shared object file: No such file or directory
+prisma:error 
+Invalid `prisma.companyInfo.findMany()` invocation:
+
+
+Unable to require(`/home/runner/workspace/node_modules/.prisma/client/libquery_engine-debian-openssl-1.1.x.so.node`).
+Prisma cannot find the required `libssl` system library in your system. Please install openssl-1.1.x and try again.
+
+Details: libssl.so.1.1: cannot open shared object file: No such file or directory
+ ⨯ PrismaClientInitializationError: 
+Invalid `prisma.teamMember.findMany()` invocation:
+
+
+Prisma cannot find the required `libssl` system library in your system. Please install openssl-1.1.x and try again.
+
+Details: libssl.so.1.1: cannot open shared object file: No such file or directory
+    at async getTeamMembers (./src/app/about/page.tsx:32:12)
+    at async Promise.all (index 0)
+    at async AboutPage (./src/app/about/page.tsx:49:40)
+digest: "3224385710"
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+prisma:error 
+Invalid `prisma.teamMember.findMany()` invocation:
+
+
+Unable to require(`/home/runner/workspace/node_modules/.prisma/client/libquery_engine-debian-openssl-1.1.x.so.node`).
+Prisma cannot find the required `libssl` system library in your system. Please install openssl-1.1.x and try again.
+
+Details: libssl.so.1.1: cannot open shared object file: No such file or directory
+prisma:error 
+Invalid `prisma.companyInfo.findMany()` invocation:
+
+
+Unable to require(`/home/runner/workspace/node_modules/.prisma/client/libquery_engine-debian-openssl-1.1.x.so.node`).
+Prisma cannot find the required `libssl` system library in your system. Please install openssl-1.1.x and try again.
+
+Details: libssl.so.1.1: cannot open shared object file: No such file or directory
+ ⨯ PrismaClientInitializationError: 
+Invalid `prisma.teamMember.findMany()` invocation:
+
+
+Prisma cannot find the required `libssl` system library in your system. Please install openssl-1.1.x and try again.
+
+Details: libssl.so.1.1: cannot open shared object file: No such file or directory
+    at async getTeamMembers (./src/app/about/page.tsx:32:12)
+    at async Promise.all (index 0)
+    at async AboutPage (./src/app/about/page.tsx:49:40)
+digest: "1086572696"
+ GET /about 200 in 201ms
+ ⨯ PrismaClientInitializationError: 
+Invalid `prisma.teamMember.findMany()` invocation:
+
+
+Prisma cannot find the required `libssl` system library in your system. Please install openssl-1.1.x and try again.
+
+Details: libssl.so.1.1: cannot open shared object file: No such file or directory
+    at async getTeamMembers (./src/app/about/page.tsx:32:12)
+    at async Promise.all (index 0)
+    at async AboutPage (./src/app/about/page.tsx:49:40)
+digest: "1086572696"
+ ⚠ ./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+
+./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+ ⚠ ./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+
+./src/components/forms/contact-form.tsx
+Attempted import error: 'contactSchema' is not exported from '@/lib/validations' (imported as 'contactSchema').
+
+Import trace for requested module:
+./src/components/forms/contact-form.tsx
+ GET / 200 in 2281ms
+ ⚠ The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
