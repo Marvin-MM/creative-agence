@@ -1,0 +1,69 @@
+
+> creative-agency@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.29
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'serverExternalPackages'
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 2.3s
+ ○ Compiling / ...
+ ✓ Compiled / in 11.6s (1736 modules)
+ GET / 200 in 12652ms
+ ✓ Compiled in 1972ms (874 modules)
+ ⚠ The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.5s (1725 modules)
+ GET /images/hero-showcase.jpg 404 in 2827ms
+ ⨯ The requested resource isn't a valid image for /images/hero-showcase.jpg received text/html; charset=utf-8
+ GET /images/work/zenith-preview.jpg 404 in 104ms
+ ⨯ The requested resource isn't a valid image for /images/work/zenith-preview.jpg received text/html; charset=utf-8
+ GET /images/work/aurora-preview.jpg 404 in 108ms
+ ⨯ The requested resource isn't a valid image for /images/work/aurora-preview.jpg received text/html; charset=utf-8
+ GET /images/work/mindful-preview.jpg 404 in 110ms
+ ⨯ The requested resource isn't a valid image for /images/work/mindful-preview.jpg received text/html; charset=utf-8
+ GET /images/work/cosmic-preview.jpg 404 in 95ms
+ ⨯ The requested resource isn't a valid image for /images/work/cosmic-preview.jpg received text/html; charset=utf-8
+ GET /images/work/eco-preview.jpg 404 in 97ms
+ ⨯ The requested resource isn't a valid image for /images/work/eco-preview.jpg received text/html; charset=utf-8
+ GET /images/work/techflow-preview.jpg 404 in 32ms
+ ⨯ The requested resource isn't a valid image for /images/work/techflow-preview.jpg received text/html; charset=utf-8
+ GET /images/clients/microsoft.svg 404 in 109ms
+ GET /images/clients/google.svg 404 in 107ms
+ GET /images/clients/netflix.svg 404 in 106ms
+ GET /images/clients/spotify.svg 404 in 106ms
+ GET /images/clients/airbnb.svg 404 in 64ms
+ GET /images/clients/stripe.svg 404 in 35ms
+ GET /images/clients/shopify.svg 404 in 32ms
+ GET /images/testimonials/sarah.jpg 404 in 38ms
+ ⨯ The requested resource isn't a valid image for /images/testimonials/sarah.jpg received text/html; charset=utf-8
+ ○ Compiling /work ...
+ ⨯ ./src/lib/db.ts
+Module parse failed: Identifier 'PrismaClient' has already been declared (30:9)
+|     }
+| }
+> import { PrismaClient } from "@prisma/client";
+| const globalForPrisma = globalThis;
+| export const db = globalForPrisma.prisma ?? new PrismaClient();
+
+Import trace for requested module:
+./src/lib/db.ts
+./src/app/work/page.tsx
+ ⨯ ./src/lib/db.ts
+Module parse failed: Identifier 'PrismaClient' has already been declared (30:9)
+|     }
+| }
+> import { PrismaClient } from "@prisma/client";
+| const globalForPrisma = globalThis;
+| export const db = globalForPrisma.prisma ?? new PrismaClient();
+
+Import trace for requested module:
+./src/lib/db.ts
+./src/app/work/page.tsx
+ GET /work 500 in 16ms
+ GET /_next/static/webpack/fd6b6714981d7065.webpack.hot-update.json 500 in 8ms
+ GET / 500 in 10ms
+ GET / 500 in 28ms
