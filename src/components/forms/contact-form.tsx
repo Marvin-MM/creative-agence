@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { contactSchema } from '@/lib/validations'
+import { contactFormSchema } from '@/lib/validations'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -53,7 +53,7 @@ export function ContactForm() {
     setValue,
     watch
   } = useForm({
-    resolver: yupResolver(contactSchema)
+    resolver: yupResolver(contactFormSchema)
   })
 
   const onSubmit = async (data: any) => {
