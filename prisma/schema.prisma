@@ -75,7 +75,7 @@ model Project {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   views       Int      @default(0)
-  
+
   @@index([featured])
   @@index([published])
   @@index([category])
@@ -94,7 +94,7 @@ model BlogPost {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   views       Int      @default(0)
-  
+
   @@index([published])
   @@index([createdAt])
 }
@@ -104,28 +104,25 @@ model ContactMessage {
   name      String
   email     String
   company   String?
-  subject   String
-  message   String   @db.Text
   phone     String?
+  subject   String?
+  message   String
   budget    String?
   timeline  String?
-  services  String[] // Services interested in
+  services  String? // JSON string
+  expiresAt DateTime
   createdAt DateTime @default(now())
-  expiresAt DateTime // Auto-delete after 30 days
-  
-  @@index([createdAt])
-  @@index([expiresAt])
+  updatedAt DateTime @updatedAt
 }
 
 model Newsletter {
   id        String   @id @default(cuid())
   email     String   @unique
+  name      String?
   confirmed Boolean  @default(false)
-  source    String?  // Where they signed up from
+  source    String?  @default("website")
   createdAt DateTime @default(now())
-  
-  @@index([confirmed])
-  @@index([createdAt])
+  updatedAt DateTime @updatedAt
 }
 
 model PageView {
@@ -135,7 +132,7 @@ model PageView {
   ip        String?
   country   String?
   createdAt DateTime @default(now())
-  
+
   @@index([page])
   @@index([createdAt])
 }
@@ -146,7 +143,7 @@ model FAQ {
   answer   String @db.Text
   order    Int    @default(0)
   active   Boolean @default(true)
-  
+
   @@index([order])
   @@index([active])
 }
@@ -162,7 +159,7 @@ model TeamMember {
   twitter  String?
   order    Int    @default(0)
   active   Boolean @default(true)
-  
+
   @@index([order])
   @@index([active])
 }
@@ -201,7 +198,7 @@ model User {
   role          String    @default("USER")
   accounts      Account[]
   sessions      Session[]
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -263,7 +260,7 @@ model Project {
   featured    Boolean  @default(false)
   published   Boolean  @default(true)
   views       Int      @default(0)
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -284,7 +281,7 @@ model BlogPost {
   featured    Boolean  @default(false)
   views       Int      @default(0)
   readTime    Int?
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -304,7 +301,7 @@ model ContactMessage {
   services  String[]
   status    String   @default("NEW")
   read      Boolean  @default(false)
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -316,7 +313,7 @@ model Newsletter {
   email     String   @unique
   name      String?
   status    String   @default("ACTIVE")
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -363,4 +360,13 @@ model TeamMember {
   updatedAt DateTime @updatedAt
 
   @@map("team_members")
+}
+model CompanyInfo {
+  id          String @id @default(cuid())
+  key         String @unique
+  value       String @db.Text
+  description String?
+  updatedAt   DateTime @updatedAt
+
+  @@map("company_info")
 }

@@ -1,31 +1,30 @@
+
 import { NextAuthOptions } from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
-import { db } from "./db"
+import { prisma } from "./db"
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
-      name: "credentials",
+      name: 'credentials',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          return null
+          throw new Error('Missing credentials')
         }
 
-        const user = await db.user.findUnique({
-          where: {
-            email: credentials.email
-          }
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email }
         })
 
         if (!user || !user.password) {
-          return null
+          throw new Error('Invalid credentials')
         }
 
         const isPasswordValid = await bcrypt.compare(
@@ -34,7 +33,7 @@ export const authOptions: NextAuthOptions = {
         )
 
         if (!isPasswordValid) {
-          return null
+          throw new Error('Invalid credentials')
         }
 
         return {
@@ -47,10 +46,15 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   session: {
-    strategy: "jwt"
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  jwt: {
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   pages: {
-    signIn: "/auth/signin"
+    signIn: '/auth/signin',
+    error: '/auth/error',
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -66,5 +70,6 @@ export const authOptions: NextAuthOptions = {
       }
       return session
     }
-  }
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 }

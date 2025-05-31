@@ -1,58 +1,46 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { newsletterSchema } from '@/lib/validations'
+import { useMutation } from '@tanstack/react-query'
+import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
-import { Mail, Send, CheckCircle, Sparkles } from 'lucide-react'
-import toast from 'react-hot-toast'
+import { Mail, CheckCircle, Loader2 } from 'lucide-react'
+import { newsletterSchema, type NewsletterFormData } from '@/lib/validations'
+import { newsletterAPI } from '@/lib/api'
+import { toast } from 'sonner'
 
 export function NewsletterSection() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    reset
-  } = useForm({
-    resolver: yupResolver(newsletterSchema)
+    reset,
+    formState: { errors, isValid },
+  } = useForm<NewsletterFormData>({
+    resolver: yupResolver(newsletterSchema),
+    mode: 'onChange',
   })
 
-  const onSubmit = async (data: any) => {
-    setIsSubmitting(true)
-    
-    try {
-      const response = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...data,
-          source: 'website_footer'
-        }),
-      })
-
-      const result = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to subscribe')
-      }
-
+  const subscribeNewsletter = useMutation({
+    mutationFn: newsletterAPI.subscribe,
+    onSuccess: () => {
       setIsSubmitted(true)
+      toast.success('Successfully subscribed to newsletter!')
       reset()
-      toast.success('Subscription successful! Check your email to confirm.')
-    } catch (error: any) {
+      setTimeout(() => setIsSubmitted(false), 3000)
+    },
+    onError: (error: Error) => {
       toast.error(error.message || 'Failed to subscribe. Please try again.')
-    } finally {
-      setIsSubmitting(false)
-    }
+    },
+  })
+
+  const onSubmit = (data: NewsletterFormData) => {
+    subscribeNewsletter.mutate(data)
   }
 
   return (
@@ -68,7 +56,7 @@ export function NewsletterSection() {
           <Card className="relative overflow-hidden bg-card/50 backdrop-blur-xl border-0 shadow-2xl">
             {/* Background Pattern */}
             <div className="absolute inset-0 bg-hero-pattern opacity-5" />
-            
+
             <CardContent className="p-12 text-center relative">
               {/* Icon */}
               <motion.div
@@ -82,45 +70,35 @@ export function NewsletterSection() {
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
                 <span className="gradient-text">Stay Inspired</span>
               </h2>
-              
+
               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Join our creative community and get weekly insights, design trends, 
                 and behind-the-scenes content delivered to your inbox.
               </p>
 
               {!isSubmitted ? (
-                <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
-                  <div className="flex gap-3">
-                    <div className="flex-1">
-                      <Input
-                        {...register('email')}
-                        type="email"
-                        placeholder="Enter your email address"
-                        className={`h-12 ${errors.email ? 'border-red-500' : ''}`}
-                      />
-                      {errors.email && (
-                        <p className="text-sm text-red-500 mt-1 text-left">
-                          {errors.email.message}
-                        </p>
-                      )}
-                    </div>
-                    
-                    <Button
-                      type="submit"
-                      className="btn-primary h-12 px-6"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4 mr-2" />
-                          Subscribe
-                        </>
-                      )}
-                    </Button>
-                  </div>
+                <form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    {...register('email')}
+                    className={`flex-1 ${errors.email ? 'border-red-500' : ''}`}
+                  />
+                  <Button 
+                    type="submit" 
+                    size="icon"
+                    disabled={!isValid || subscribeNewsletter.isPending}
+                  >
+                    {subscribeNewsletter.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Mail className="h-4 w-4" />
+                    )}
+                  </Button>
                 </form>
+                {errors.email && (
+                  <p className="text-sm text-red-500 mt-2">{errors.email.message}</p>
+                )}
               ) : (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
