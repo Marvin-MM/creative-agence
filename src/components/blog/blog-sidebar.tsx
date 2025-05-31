@@ -1,4 +1,3 @@
-// src/components/blog/blog-sidebar.tsx
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -15,6 +14,10 @@ import {
   Calendar,
   Eye
 } from 'lucide-react'
+
+interface BlogSidebarProps {
+  categories?: { name: string; count: number }[]
+}
 
 // Mock data - in real app, this would come from API
 const popularPosts = [
@@ -148,7 +151,7 @@ export function BlogSidebar() {
               </Link>
             ))}
           </div>
-          
+
           <Button variant="outline" className="w-full mt-4 group" asChild>
             <Link href="/blog">
               View All Articles
