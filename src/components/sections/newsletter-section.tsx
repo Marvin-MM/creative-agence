@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useState } from 'react'
@@ -77,28 +78,30 @@ export function NewsletterSection() {
               </p>
 
               {!isSubmitted ? (
-                <form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    {...register('email')}
-                    className={`flex-1 ${errors.email ? 'border-red-500' : ''}`}
-                  />
-                  <Button 
-                    type="submit" 
-                    size="icon"
-                    disabled={!isValid || subscribeNewsletter.isPending}
-                  >
-                    {subscribeNewsletter.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Mail className="h-4 w-4" />
-                    )}
-                  </Button>
+                <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
+                  <div className="flex gap-2">
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      {...register('email')}
+                      className={`flex-1 ${errors.email ? 'border-red-500' : ''}`}
+                    />
+                    <Button 
+                      type="submit" 
+                      size="icon"
+                      disabled={!isValid || subscribeNewsletter.isPending}
+                    >
+                      {subscribeNewsletter.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Mail className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                  {errors.email && (
+                    <p className="text-sm text-red-500 mt-2">{errors.email.message}</p>
+                  )}
                 </form>
-                {errors.email && (
-                  <p className="text-sm text-red-500 mt-2">{errors.email.message}</p>
-                )}
               ) : (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
