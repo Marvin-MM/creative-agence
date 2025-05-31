@@ -60,4 +60,24 @@ export const blogAPI = {
 export const analyticsAPI = {
   getDashboard: () => api.get('/analytics/dashboard'),
   getPageViews: (params?: any) => api.get('/analytics/pageviews', { params }),
+  trackPageView: (data: any) => api.post('/analytics', data),
+}
+
+export const teamAPI = {
+  getAll: (params?: any) => api.get('/team', { params }),
+  create: (data: any) => api.post('/team', data),
+  update: (id: string, data: any) => api.put(`/team/${id}`, data),
+  delete: (id: string) => api.delete(`/team/${id}`),
+}
+
+export const faqAPI = {
+  getAll: (params?: any) => api.get('/faq', { params }),
+  create: (data: any) => api.post('/faq', data),
+  update: (id: string, data: any) => api.put(`/faq/${id}`, data),
+  delete: (id: string) => api.delete(`/faq/${id}`),
+}
+
+export const companyAPI = {
+  getInfo: () => api.get('/company'),
+  updateInfo: (data: any) => api.put('/company', data),
 }

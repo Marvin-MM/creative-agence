@@ -1,8 +1,9 @@
-
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import nodemailer from 'nodemailer'
 import { contactFormSchema } from '@/lib/validations'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
 export async function POST(request: NextRequest) {
   try {
@@ -45,7 +46,7 @@ export async function POST(request: NextRequest) {
 
     // Send notification email to admin
     if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.ADMIN_EMAIL) {
-      const transporter = nodemailer.createTransporter({
+      const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: parseInt(process.env.SMTP_PORT || '587'),
         secure: false,
@@ -101,7 +102,7 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Contact form error:', error)
-    
+
     if (error instanceof Error && error.name === 'ValidationError') {
       return NextResponse.json(
         { error: error.message },
@@ -116,16 +117,24 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions)
+
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
     const messages = await prisma.contactMessage.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: 10
+      orderBy: { createdAt: 'desc' }
     })
 
-    return NextResponse.json({ success: true, data: messages })
+    return NextResponse.json(messages)
   } catch (error) {
-    console.error('Get messages error:', error)
+    console.error('Error fetching contact messages:', error)
     return NextResponse.json(
       { error: 'Failed to fetch messages' },
       { status: 500 }

@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
         tags: true,
         featured: true,
         images: true,
-        videos: true,
+        gallery: true,
         createdAt: true,
         views: true,
       }
@@ -42,7 +42,52 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error fetching projects:', error)
     return NextResponse.json(
-      { error: 'Failed to send message' },
+      { error: 'Failed to fetch projects' },
+      { status: 500 }
+    )
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const session = await getServerSession(authOptions)
+    
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
+    const body = await request.json()
+    const { title, description, content, image, images, gallery, category, tags, client, year, url, featured, published } = body
+
+    const slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+
+    const project = await prisma.project.create({
+      data: {
+        title,
+        slug,
+        description,
+        content,
+        image,
+        images: images || [],
+        gallery: gallery || [],
+        category,
+        tags: tags || [],
+        client,
+        year,
+        url,
+        featured: featured || false,
+        published: published || false,
+      }
+    })
+
+    return NextResponse.json(project)
+  } catch (error) {
+    console.error('Error creating project:', error)
+    return NextResponse.json(
+      { error: 'Failed to create project' },
       { status: 500 }
     )
   }
