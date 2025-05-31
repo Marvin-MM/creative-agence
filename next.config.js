@@ -1,15 +1,26 @@
-// next.config.js
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      'res.cloudinary.com',
-      'images.unsplash.com',
-      'via.placeholder.com'
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+      }
     ],
     formats: ['image/webp', 'image/avif'],
   },
-  serverExternalPackages: ['bcryptjs'],
+  experimental: {
+    serverComponentsExternalPackages: ['bcryptjs'],
+  },
   async headers() {
     return [
       {
@@ -31,14 +42,6 @@ const nextConfig = {
       }
     ]
   },
-  async rewrites() {
-    return [
-      {
-        source: '/admin/:path*',
-        destination: '/admin/:path*'
-      }
-    ]
-  }
 }
 
 module.exports = nextConfig
