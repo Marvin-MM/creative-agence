@@ -89,6 +89,14 @@ export const teamMemberSchema = yup.object({
 // Type exports
 export type ContactFormData = yup.InferType<typeof contactFormSchema>
 export type NewsletterFormData = yup.InferType<typeof newsletterSchema>
+
+// Signin validation schema
+export const signinSchema = yup.object({
+  email: yup.string().email('Please enter a valid email').required('Email is required'),
+  password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+})
+
+export type SigninFormData = yup.InferType<typeof signinSchema>
 export type ProjectFormData = yup.InferType<typeof projectSchema>
 export type BlogPostFormData = yup.InferType<typeof blogPostSchema>
 export type SignInFormData = yup.InferType<typeof signInSchema>

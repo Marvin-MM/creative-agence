@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { signIn, getSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Eye, EyeOff, Lock, Mail } from 'lucide-react'
+import { Eye, EyeOff, Lock, Mail, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -13,13 +13,14 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import toast from 'react-hot-toast'
+import { useMutation } from 'react-query'
 
-const schema = yup.object({
+const signinSchema = yup.object({
   email: yup.string().email('Please enter a valid email').required('Email is required'),
   password: yup.string().required('Password is required'),
 })
 
-type FormData = yup.InferType<typeof schema>
+type SigninFormData = yup.InferType<typeof signinSchema>
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -28,13 +29,14 @@ export default function SignInPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<FormData>({
-    resolver: yupResolver(schema)
+    formState: { errors, isValid },
+  } = useForm<SigninFormData>({
+    resolver: yupResolver(signinSchema),
+    mode: 'onChange'
   })
 
-  const onSubmit = async (data: FormData) => {
-    try {
+  const signinMutation = useMutation({
+    mutationFn: async (data: SigninFormData) => {
       const result = await signIn('credentials', {
         email: data.email,
         password: data.password,
@@ -42,14 +44,22 @@ export default function SignInPage() {
       })
 
       if (result?.error) {
-        toast.error('Invalid credentials')
-      } else {
-        toast.success('Welcome back!')
-        router.push('/dashboard')
+        throw new Error('Invalid credentials')
       }
-    } catch (error) {
-      toast.error('Something went wrong')
+
+      return result
+    },
+    onSuccess: () => {
+      toast.success('Welcome back!')
+      router.push('/admin')
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Something went wrong')
     }
+  })
+
+  const onSubmit = (data: SigninFormData) => {
+    signinMutation.mutate(data)
   }
 
   return (
@@ -124,11 +134,11 @@ export default function SignInPage() {
 
               <Button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={!isValid || signinMutation.isPending}
                 className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 h-12"
               >
-                {isSubmitting ? (
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                {signinMutation.isPending ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
                   'Sign In'
                 )}

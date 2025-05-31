@@ -202,16 +202,28 @@ export function Footer() {
             <p className="text-muted-foreground text-sm mb-4">
               Get weekly design insights, project updates, and creative inspiration.
             </p>
-            <div className="flex gap-2">
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault()
+                const formData = new FormData(e.currentTarget)
+                const email = formData.get('email') as string
+                if (email) {
+                  window.location.href = `/#newsletter?email=${encodeURIComponent(email)}`
+                }
+              }}
+              className="flex gap-2"
+            >
               <Input 
+                name="email"
                 placeholder="Enter your email" 
                 className="flex-1"
                 type="email"
+                required
               />
-              <Button size="sm" className="btn-primary">
+              <Button type="submit" size="sm" className="btn-primary">
                 <ArrowRight className="w-4 h-4" />
               </Button>
-            </div>
+            </form>
           </div>
         </motion.div>
       </div>
